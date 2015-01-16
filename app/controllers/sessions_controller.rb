@@ -7,7 +7,8 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id.to_s
       redirect_to home_path
     else
-      render :new
+      # render '/sessions/new' //why doesn't this work?!?!
+      redirect_to login_path
     end
   end
 
