@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id.to_s
       redirect_to home_path
     else
-      render :new
+      render '/sessions/new'
     end
   end
 
