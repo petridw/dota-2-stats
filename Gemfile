@@ -27,7 +27,7 @@ gem 'mongoid', '~> 4.0.0'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
-gem 'heroku_secrets', github: 'alexpeattie/heroku_secrets'
+gem 'figaro'
 
 group :production do
   gem 'rails_12factor'
