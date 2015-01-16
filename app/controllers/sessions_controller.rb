@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
       redirect_to home_path
     else
       # render '/sessions/new' //why doesn't this work?!?!
-      redirect_to login_path
+      render :new
     end
   end
 
