@@ -23,11 +23,16 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Use Mongoid for MongoDB
 gem 'mongoid', '~> 4.0.0'
-
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
-
+# Use figaro to protect Steam Web API Key
 gem 'figaro'
+# Use Bootstrap for responsive styling
+gem 'bootstrap-sass', '~> 3.3.1'
+# Use autoprefixer so that Bootstrapper can add vendor prefixes automatically
+gem 'autoprefixer-rails'
+
+
 
 group :production do
   gem 'rails_12factor'
