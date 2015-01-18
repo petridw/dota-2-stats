@@ -1,9 +1,37 @@
-<h1>Sign up!</h1>
+<div class="container-fluid">
+  <div class="h1 col-sm-offset-2 col-sm-10">
+    Sign up!
+  </div>
+</div>
 
-<%= form_for :user, url: '/users' do |f| %>
-  Username: <%= f.text_field :username %><br>
-  Email: <%= f.text_field :email %><br>
-  Password: <%= f.password_field :password %><br>
-  Confirm password: <%= f.password_field :password_confirmation %><br>
-  <%= f.submit 'Sign up!' %>
+<%= form_for :user, url: '/users', html: {class: "form-horizontal"} do |f| %>
+  <div class="form-group">
+    <label for="newUsernameInput" class="col-sm-2 control-label">Username:</label>
+    <div class="col-sm-6">
+      <%= f.text_field :username, id: "newUsernameInput", class: "form-control", placeholder: "Username" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="newEmailInput" class="col-sm-2 control-label">Email:</label>
+    <div class="col-sm-6">
+      <%= f.text_field :email, id: "newEmailInput", class: "form-control", placeholder: "Email address" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="newPasswordInput" class="col-sm-2 control-label">Password:</label>
+    <div class="col-sm-6">
+      <%= f.password_field :password, id: "newPasswordInput", class: "form-control", placeholder: "Password" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="newPasswordConfirmationInput", class="col-sm-2 control-label">Confirm password:</label>
+    <div class="col-sm-6">
+      <%= f.password_field :password_confirmation, id: "newPasswordConfirmationInput", class: "form-control", placeholder: "Confirm password" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <%= f.submit 'Submit', class: "btn btn-default" %>
+    </div>
+  </div>
 <% end %>
