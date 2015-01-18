@@ -1,13 +1,8 @@
-require 'net/http'
+filename = File.join(Rails.root, 'app', 'assets', 'data', 'heroes.json')
+file = File.read(filename)
 
-url = URI.parse("https://api.steampowered.com/IEconDOTA2_570/GetHeroes/v0001/?key=#{ENV['STEAM_WEB_API_KEY']}")
-res = Net::HTTP::get(url)
-
-heroes = JSON.load(res)['result']['heroes']
+heroes = JSON.parse(file)['heroes']
 
 heroes.each do |hero|
-  split_name = hero['name'].split('_')
-  final_name = split_name - ['npc', 'dota', 'hero']
-  final_name = final_name.join(' ')
-  Hero.create(name: final_name, id: hero['id'])
+  Hero.create(name: hero['name'], id: hero['id'])
 end
