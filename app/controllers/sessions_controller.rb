@@ -13,12 +13,12 @@ class SessionsController < ApplicationController
         session[:user_id] = @user.id.to_s
         redirect_to home_path
       else
-        @user = User.new
+        @user = User.new(username: params[:user][:username])
         @user.errors.add(:password, "Incorrect password")
         render :new
       end
     else
-      @user = User.new
+      @user = User.new(username: params[:user][:username])
       @user.errors.add(:username, "User ID not found")
       render :new
     end
