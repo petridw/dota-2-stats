@@ -1,13 +1,25 @@
 class SessionsController < ApplicationController
 
-  def create
-    user = User.find_by(username: params[:username])
+  def new
+    @user = User.new
+  end
 
-    if user && user.authenticate(params[:password])
-      session[:user_id] = user.id.to_s
-      redirect_to home_path
+  def create
+    # user = User.find_by(username: params[:username])
+    @user = User.find_by(username: params[:user][:username])
+
+    if @user
+      if @user.authenticate(params[:user][:password])
+        session[:user_id] = @user.id.to_s
+        redirect_to home_path
+      else
+        @user = User.new
+        @user.errors.add(:password, "Incorrect password")
+        render :new
+      end
     else
-      # render '/sessions/new' //why doesn't this work?!?!
+      @user = User.new
+      @user.errors.add(:username, "User ID not found")
       render :new
     end
   end

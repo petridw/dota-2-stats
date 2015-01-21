@@ -1,0 +1,11 @@
+<% if errors.any? %>
+  <div class="alert alert-danger" role="alert">
+    <% errors.each do |msg| %>
+      <div>
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>
+        <%= msg.capitalize %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
