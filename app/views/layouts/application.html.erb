@@ -8,11 +8,7 @@
 </head>
 <body>
 
-<% if current_user %>
-  Currently logged in as: <%= current_user.username %> | <%= link_to 'logout', logout_path %>
-<% else %>
-  <%= link_to 'login', login_path %> | <%= link_to 'sign up', signup_path %>
-<% end %>
+<%= render partial: "/layouts/navbar" %>
 
 <%= yield %>
 

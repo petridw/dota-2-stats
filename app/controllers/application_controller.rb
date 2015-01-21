@@ -4,7 +4,11 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   def welcome
-    redirect_to signup_path
+    if current_user
+      redirect_to home_path
+    else
+      redirect_to signup_path
+    end
   end
 
   def current_user

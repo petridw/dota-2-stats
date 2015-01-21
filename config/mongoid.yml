@@ -32,7 +32,7 @@ production:
         # Lowering this number will help the driver recover more quickly from changes to replica set reconfiguration
         refresh_interval: 10
   options:
-   raise_not_found_error: false
+    raise_not_found_error: false
 
 
 

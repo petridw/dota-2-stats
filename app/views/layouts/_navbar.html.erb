@@ -1,0 +1,52 @@
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-links">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+      <%= link_to "DotaStats", home_path, class: "navbar-brand" %>
+
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="navbar-links">
+
+      <ul class="nav navbar-nav">
+        <li><%= link_to "Live Games", home_path  %></li>
+        <li><%= link_to "My Matches", home_path %></li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <% if current_user %>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+              <%= current_user.username %> <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+              <li><%= link_to "Settings" %></li>
+              <li class="divider"></li>
+              <li><%= link_to "Logout", logout_path %></li>
+            </ul>
+
+          </li>
+        <% else %>
+          <li><%= link_to 'Login', login_path %></li>
+          <li><%= link_to 'Sign up', signup_path %></li>
+        <% end %>
+      </ul>
+
+      <%= form_tag home_path, :method => :get, :class => "navbar-form navbar-right" do %>
+        <div class="form-group">
+          <%= text_field_tag :search_string, nil, class: "form-control", placeholder: "Search" %>
+          <%= submit_tag "Submit", class: "btn btn-default" %>
+        </div>
+      <% end %>
+
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
