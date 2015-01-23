@@ -6,4 +6,6 @@ class Match
   field :duration, type: Float
 
   has_many :teams
+  belongs_to :league
+  belongs_to :user
 end

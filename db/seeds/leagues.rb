@@ -1,0 +1,1 @@
+League.update_leagues

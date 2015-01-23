@@ -1,23 +1,31 @@
 Rails.application.routes.draw do
 
+#application
   root 'application#welcome'
   get '/application/index', as: :home
 
+#users
   get '/signup' => 'users#new', as: :signup
   post '/users' => 'users#create'
   get '/settings' => 'users#settings', as: :settings
   get '/unlinksteam' => 'users#unlinkSteam', as: :unlink_steam
 
+# sessions
   get '/login' => 'sessions#new', as: :login
   post '/login' => 'sessions#create'
   get '/logout' => 'sessions#destroy', as: :logout
 
+# matches
   get '/livegames' => 'matches#index', as: :livegames
 
+# steam
   post 'auth/steam/callback' => 'steam#auth_callback'
 
+# leagues
+  get '/leagues' => 'leagues#index', as: :leagues
+
+# resources
   resources :users
-  resources :matches
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

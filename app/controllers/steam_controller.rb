@@ -11,7 +11,8 @@ class SteamController < ApplicationController
     redirect_to settings_path
   end
 
-  def self.getLiveGames
+  # return JSON list of live league games
+  def self.get_live_games
     option = "GetLiveLeagueGames/v1/"
     auth = { query: { key: ENV['STEAM_WEB_API_KEY']}}
 
@@ -19,7 +20,19 @@ class SteamController < ApplicationController
 
     response = HTTParty.get search_url, auth
 
-    matchlist = JSON.load(response.body)['result']['games']
+    JSON.parse(response.body)['result']['games']
+
+  end
+
+  # return JSON list of leagues
+  def self.get_leagues
+    option = "GetLeagueListing/v1/"
+    auth = { query: { key: ENV['STEAM_WEB_API_KEY']}}
+    search_url = API_URL + option
+
+    response = HTTParty.get search_url, auth
+
+    JSON.parse(response.body)['result']['leagues'] || nil
 
   end
 

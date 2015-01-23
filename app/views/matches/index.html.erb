@@ -1,7 +1,24 @@
 <h1>Match List</h1>
 
-<ul>
-  <% @matches.each do |match| %>
-    <li>Match ID: <%= match['match_id'] %></li>
-  <% end %>
-</ul>
+<div class="table-responsive">
+  <table class="table table-striped table-hover">
+    <tr>
+      <th>Match ID</th>
+      <th><%= link_to "Spectators" %></th>
+      <th><%= link_to "League" %></th>
+      <th>Series Type</th>
+      <th>Radiant Wins</th>
+      <th>Dire Wins</th>
+    </tr>
+    <% @matches.each do |match| %>
+      <tr>
+        <td><%= match['match_id'] %></td>
+        <td><%= match['spectators'] %></td>
+        <td><%= match['league_id'] %></td>
+        <td><%= match['series_type'] %></td>
+        <td><%= match['radiant_series_wins'] %></td>
+        <td><%= match['dire_series_wins'] %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>
