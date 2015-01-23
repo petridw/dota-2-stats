@@ -6,7 +6,7 @@
   <div class="row">
     <div class="col-md-12">
       <div class="table-responsive">
-        <table class="table table-striped table-hover">
+        <table class="table table-striped">
           <thead>
             <tr>
               <th>Match ID</th>
@@ -15,11 +15,12 @@
               <th>Series Type</th>
               <th>Radiant Kills</th>
               <th>Dire Kills</th>
+              <th>Game Time</th>
             </tr>
           </thead>
           <% @matches.each do |match| %>
             <tr>
-              <td><%= match[:match_id] %></td>
+              <td><%= link_to match[:match_id], match_path(match[:match_id]) %></td>
               <td><%= match[:spectators] %></td>
               <td>
                 <% if match[:league] %>
@@ -37,6 +38,7 @@
               </td>
               <td><%= match[:radiant_kills] %></td>
               <td><%= match[:dire_kills] %></td>
+              <td><%= match[:duration] %></td>
             </tr>
           <% end %>
         </table>

@@ -17,6 +17,7 @@ Rails.application.routes.draw do
 
 # matches
   get '/livegames' => 'matches#index', as: :livegames
+  get '/matches/:id' => 'matches#show', as: :match
 
 # steam
   post 'auth/steam/callback' => 'steam#auth_callback'
