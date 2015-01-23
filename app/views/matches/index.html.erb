@@ -1,24 +1,47 @@
-<h1>Match List</h1>
+<div class="container-fluid">
 
-<div class="table-responsive">
-  <table class="table table-striped table-hover">
-    <tr>
-      <th>Match ID</th>
-      <th><%= link_to "Spectators" %></th>
-      <th><%= link_to "League" %></th>
-      <th>Series Type</th>
-      <th>Radiant Wins</th>
-      <th>Dire Wins</th>
-    </tr>
-    <% @matches.each do |match| %>
-      <tr>
-        <td><%= match['match_id'] %></td>
-        <td><%= match['spectators'] %></td>
-        <td><%= match['league_id'] %></td>
-        <td><%= match['series_type'] %></td>
-        <td><%= match['radiant_series_wins'] %></td>
-        <td><%= match['dire_series_wins'] %></td>
-      </tr>
-    <% end %>
-  </table>
+  <div class="row">
+    <div class="h2 col-md-12">Live Games</div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="table-responsive">
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th>Match ID</th>
+              <th><%= link_to "Spectators" %></th>
+              <th><%= link_to "League" %></th>
+              <th>Series Type</th>
+              <th>Radiant Kills</th>
+              <th>Dire Kills</th>
+            </tr>
+          </thead>
+          <% @matches.each do |match| %>
+            <tr>
+              <td><%= match[:match_id] %></td>
+              <td><%= match[:spectators] %></td>
+              <td>
+                <% if match[:league] %>
+                  <%= link_to match[:league].name, match[:league].url %>
+                <% else %>
+                  Unknown League
+                <% end %>
+              </td>
+              <td>
+                <% if match[:series_type]==0 %>
+                  BO1
+                <% else %>
+                  <%= match[:series_type] %>
+                <% end %>
+              </td>
+              <td><%= match[:radiant_kills] %></td>
+              <td><%= match[:dire_kills] %></td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+    </div>
+  </div>
+
 </div>
