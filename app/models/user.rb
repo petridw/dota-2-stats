@@ -6,6 +6,9 @@ class User
   field :username, type: String
   field :email, type: String
   field :password_digest, type: String
+  field :steam_id, type: Integer
+  field :steam_pic, type: String
+  field :steam_nickname, type: String
 
   validates :email, presence: true, uniqueness: true
   validates :username, presence: true, uniqueness: true

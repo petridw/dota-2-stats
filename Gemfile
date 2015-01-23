@@ -31,6 +31,12 @@ gem 'figaro'
 gem 'bootstrap-sass', '~> 3.3.1'
 # Use autoprefixer so that Bootstrapper can add vendor prefixes automatically
 gem 'autoprefixer-rails'
+# Use HTTParty for requests to steam web API
+gem 'httparty'
+# Use Hashie for easily converting parsed JSON to objects
+gem 'hashie'
+# Use Omniauth-steam strategy for securely logging in through steam
+gem 'omniauth-steam'
 
 
 
