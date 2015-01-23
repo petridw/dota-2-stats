@@ -6,8 +6,7 @@ Rails.application.routes.draw do
   get '/signup' => 'users#new', as: :signup
   post '/users' => 'users#create'
   get '/settings' => 'users#settings', as: :settings
-
-  get '/user/:id/steam' => "users#updatesteam", as: :user_update_steam
+  get '/unlinksteam' => 'users#unlinkSteam', as: :unlink_steam
 
   get '/login' => 'sessions#new', as: :login
   post '/login' => 'sessions#create'

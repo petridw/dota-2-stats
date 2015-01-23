@@ -36,6 +36,22 @@ class UsersController < ApplicationController
     @user = current_user
   end
 
+  def updatesteam
+    @user = current_user
+
+    if @user.update(params.permit(:steam_id))
+      redirect_to settings_path
+    else
+      render :settings
+    end
+  end
+
+  def unlinkSteam
+    current_user.update(steam_id: nil, steam_pic: nil, steam_nickname: nil)
+
+    redirect_to settings_path
+  end
+
 
   private
     def user_params

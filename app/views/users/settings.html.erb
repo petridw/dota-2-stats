@@ -1,13 +1,16 @@
 <h1>Settings</h1>
 
-<% if @user.steam_id %>
-  Linked Steam Account:<br>
-  <%= image_tag(@user.steam_pic) %><br>
-  Nickname: <%= @user.steam_nickname %><br>
-  Steam ID: <%= @user.steam_id %><br>
+<div>
+  <% if @user.steam_id %>
+    Linked Steam Account:<br>
+    <%= image_tag(@user.steam_pic) %><br>
+    Nickname: <%= @user.steam_nickname %><br>
+    Steam ID: <%= @user.steam_id %><br>
 
-<% elsif session[:steam_user]%>
-  Link this Steam account?
-<% else %>
-  <%= link_to image_tag("http://cdn.steamcommunity.com/public/images/signinthroughsteam/sits_large_noborder.png"), '/auth/steam' %>
-<% end %>
+    <%= link_to "Unlink this Steam account", unlink_steam_path %>
+
+  <% else %>
+    <%= link_to image_tag("http://cdn.steamcommunity.com/public/images/signinthroughsteam/sits_large_noborder.png"), '/auth/steam' %>
+  <% end %>
+</div>
+

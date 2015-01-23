@@ -12,8 +12,8 @@ class User
 
   validates :email, presence: true, uniqueness: true
   validates :username, presence: true, uniqueness: true
-  validates :password, confirmation: true, length: {minimum: 8}
-  validates :password_confirmation, presence: true, length: {minimum: 8}
+  validates :password, confirmation: true, length: {minimum: 8}, on: :create
+  validates :password_confirmation, presence: true, length: {minimum: 8}, on: :create
 
   has_secure_password
 

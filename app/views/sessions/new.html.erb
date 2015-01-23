@@ -4,24 +4,4 @@
   </div>
 </div>
 
-<%= form_for :user, url: '/login', html: {class: "form-horizontal"} do |f| %>
-  <div class="form-group">
-    <label for="loginUsername" class="col-sm-2 control-label">Username:</label>
-    <div class="col-sm-6">
-      <%= f.text_field :username, id: "loginUsername", class: "form-control", placeholder: "Username" %>
-      <%= render "shared/form_error_messages", :errors => @user.errors.messages[:username] %>
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="loginPassword" class="col-sm-2 control-label">Password:</label>
-    <div class="col-sm-6">
-      <%= f.password_field :password, id: "loginPassword", class: "form-control", placeholder: "Password" %>
-      <%= render "shared/form_error_messages", :errors => @user.errors.messages[:password] %>
-    </div>
-  </div>
-  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-6">
-      <%= f.submit 'login', class: "btn btn-default" %>
-    </div>
-  </div>
-<% end %>
+<%= render partial: "shared/login_form" %>

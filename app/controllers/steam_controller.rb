@@ -5,11 +5,9 @@ class SteamController < ApplicationController
   def auth_callback
     auth = request.env['omniauth.auth']
 
-    session[:steam_user] = { nickname: auth.info['nickname'],
-                             image: auth.info['image'],
-                             steam_id: auth.uid }
+    current_user.update(steam_id: auth.uid, steam_nickname: auth.info['nickname'], steam_pic: auth.info['image'])
 
-    redirect_to user_update_steam_path(current_user.id)
+    redirect_to settings_path
   end
 
 end
