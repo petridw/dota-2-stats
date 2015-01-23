@@ -1,4 +1,4 @@
-<%= form_for :user, url: '/users', html: {class: "form-horizontal"} do |f| %>
+<%= form_for @user, html: {class: "form-horizontal"} do |f| %>
 
   <div class="form-group">
     <label for="newUsernameInput" class="col-sm-2 control-label">Username:</label>
@@ -34,7 +34,7 @@
 
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-6">
-      <%= f.submit 'Submit', class: "btn btn-default" %>
+      <%= f.submit class: "btn btn-default" %>
     </div>
   </div>
 <% end %>

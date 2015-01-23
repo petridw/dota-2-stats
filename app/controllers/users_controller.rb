@@ -32,19 +32,17 @@ class UsersController < ApplicationController
     # normally would do a render :edit
   end
 
+  def destroy
+    current_user.destroy
+
+    redirect_to logout_path
+  end
+
   def settings
     @user = current_user
   end
 
-  def updatesteam
-    @user = current_user
 
-    if @user.update(params.permit(:steam_id))
-      redirect_to settings_path
-    else
-      render :settings
-    end
-  end
 
   def unlinkSteam
     current_user.update(steam_id: nil, steam_pic: nil, steam_nickname: nil)
