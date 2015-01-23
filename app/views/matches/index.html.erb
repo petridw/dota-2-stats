@@ -1,1 +1,7 @@
 <h1>Match List</h1>
+
+<ul>
+  <% @matches.each do |match| %>
+    <li>Match ID: <%= match['match_id'] %></li>
+  <% end %>
+</ul>
