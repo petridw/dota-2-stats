@@ -8,7 +8,27 @@ class ApplicationController < ActionController::Base
   end
   helper_method :current_user
 
+  def sec_to_str(total_seconds)
+
+    str = ""
+
+    minutes = total_seconds / 60
+    seconds = total_seconds % 60
+
+    "#{format('%02d', minutes)}:#{format('%02d', seconds)}"
+  end
+
   def authorize
-    redirect_to login_path unless current_user
+    unless current_user
+      flash[:danger] = "You must login in order to view this page."
+      redirect_to login_path
+    end
+  end
+
+  def auth_steam
+    unless current_user.steam_id
+      flash[:danger] = "You must sync your steam account in order to get your recent games history"
+      redirect_to settings_path
+    end
   end
 end

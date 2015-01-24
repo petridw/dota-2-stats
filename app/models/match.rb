@@ -2,10 +2,11 @@ class Match
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  field :spectators, type: Integer
-  field :duration, type: Float
+  #id is match_id
+  field :radiant_win, type: Boolean
+  field :duration, type: Integer
+  field :start_time, type: Integer
 
-  has_many :teams
-  belongs_to :league
+  embeds_many :players
   belongs_to :user
 end

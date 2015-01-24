@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
 #application
-  root 'matches#index'
+  root 'livematches#index'
 
 #users
   get '/signup' => 'users#new', as: :signup
@@ -14,10 +14,14 @@ Rails.application.routes.draw do
   post '/login' => 'sessions#create'
   get '/logout' => 'sessions#destroy', as: :logout
 
-# matches
-  get '/livegames' => 'matches#index', as: :live_games
+# livegames
+  get '/livematches' => 'livematches#index', as: :live_matches
+  get '/livematches/:id' => 'livematches#show', as: :live_match
+
+# mygames
+  get '/matches' => 'matches#index', as: :matches
   get '/matches/:id' => 'matches#show', as: :match
-  get '/mygames' => 'matches#mygames', as: :my_games
+
 
 # steam
   post 'auth/steam/callback' => 'steam#auth_callback'
