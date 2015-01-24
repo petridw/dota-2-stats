@@ -24,7 +24,11 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
 
     if @user.update(user_params)
-      redirect_to home_path
+      flash.now[:info] = "User successfully updated."
+      render :settings
+    else
+      flash.now[:danger] = "Failed to update user."
+      render :settings
     end
 
     # Not sure what to do if User can't be updated

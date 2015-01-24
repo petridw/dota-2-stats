@@ -1,5 +1,8 @@
 class MatchesController < ApplicationController
 
+  before_action :authorize, only: :mygames
+
+
   def index
     matches_json = SteamController.get_live_games
     @matches = []
@@ -34,13 +37,52 @@ class MatchesController < ApplicationController
     end
   end
 
+
   def show
     # @match = SteamController.
   end
 
+
+  def mygames
+    if current_user.steam_id
+      matches_json = SteamController.get_match_history(current_user.steam_id)
+
+      @matches = []
+      lobby_types = [ 
+                      "Public matchmaking",
+                      "Practice",
+                      "Tournament",
+                      "Tutorial",
+                      "Co-op with bots",
+                      "Team match",
+                      "Solo Queue",
+                      "Ranked",
+                      "Solo Mid 1vs1"
+                    ]
+
+      matches_json.each do |match_json|
+
+        start_time = Time.at(match_json['start_time']).strftime("%d/%m/%Y")
+
+        match_hash = {
+          match_id: match_json['match_id'],
+          start_time: start_time,
+          lobby_type: lobby_types[match_json['lobby_type']]
+        }
+
+        @matches.push(match_hash)
+      end
+    else
+      flash[:danger] = "You must sync your steam account in order to get your recent games history"
+      redirect_to settings_path
+    end
+  end
+
+
   def update_match_list
     match_json = SteamController.get_live_games
   end
+
 
   def sec_to_str(total_seconds)
 

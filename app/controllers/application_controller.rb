@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   def welcome
     if current_user
-      redirect_to home_path
+      redirect_to live_games_path
     else
       redirect_to signup_path
     end

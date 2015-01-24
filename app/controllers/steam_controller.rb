@@ -36,4 +36,14 @@ class SteamController < ApplicationController
 
   end
 
+  def self.get_match_history(steam_id)
+    option = "GetMatchHistory/V001/"
+    auth = { query: { account_id: steam_id, key: ENV['STEAM_WEB_API_KEY']}}
+    search_url = API_URL + option
+
+    response = HTTParty.get search_url, auth
+
+    JSON.parse(response.body)['result']['matches']
+  end
+
 end

@@ -17,8 +17,8 @@
     <div class="collapse navbar-collapse" id="navbar-links">
 
       <ul class="nav navbar-nav">
-        <li><%= link_to "Live Games", livegames_path  %></li>
-        <li><%= link_to "My Matches", livegames_path %></li>
+        <li><%= link_to "Live Games", live_games_path  %></li>
+        <li><%= link_to "My Matches", my_games_path %></li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
@@ -40,7 +40,7 @@
         <% end %>
       </ul>
 
-      <%= form_tag home_path, :method => :get, :class => "navbar-form navbar-right" do %>
+      <%= form_tag root_path, :method => :get, :class => "navbar-form navbar-right" do %>
         <div class="form-group">
           <%= text_field_tag :search_string, nil, class: "form-control", placeholder: "Search" %>
         </div>

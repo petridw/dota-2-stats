@@ -2,7 +2,6 @@ Rails.application.routes.draw do
 
 #application
   root 'application#welcome'
-  get '/application/index', as: :home
 
 #users
   get '/signup' => 'users#new', as: :signup
@@ -16,8 +15,9 @@ Rails.application.routes.draw do
   get '/logout' => 'sessions#destroy', as: :logout
 
 # matches
-  get '/livegames' => 'matches#index', as: :livegames
+  get '/livegames' => 'matches#index', as: :live_games
   get '/matches/:id' => 'matches#show', as: :match
+  get '/mygames' => 'matches#mygames', as: :my_games
 
 # steam
   post 'auth/steam/callback' => 'steam#auth_callback'
