@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+ruby '2.2.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'
@@ -39,6 +40,8 @@ gem 'hashie'
 gem 'omniauth-steam'
 # Use sidekiq for running API calls in background threads
 gem 'sidekiq'
+# Use Puma for a better production web server
+gem 'puma'
 
 
 group :production do
