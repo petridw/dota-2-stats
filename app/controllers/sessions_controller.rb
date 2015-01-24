@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
       if @user.authenticate(params[:user][:password])
         session[:user_id] = @user.id.to_s
         flash[:info] = "You have successfully signed in."
-        redirect_to home_path
+        redirect_to root_path
       else
         @user = User.new(username: params[:user][:username])
         @user.errors.add(:password, "Incorrect password")

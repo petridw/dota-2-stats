@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
 #application
-  root 'application#welcome'
+  root 'matches#index'
 
 #users
   get '/signup' => 'users#new', as: :signup
