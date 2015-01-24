@@ -22,8 +22,11 @@ class MatchesController < ApplicationController
 
     matches_json.each do |match_json|
 
-      # match = Match.find(match_json['match_id'])
-      # add_match(match_json) unless match
+      match = Match.find(match_json['match_id'])
+      if match == nil
+        match_details = SteamController.get_match(match_json['match_id'])
+        add_match(match_details)
+      end
 
       start_time = Time.at(match_json['start_time']).strftime("%m/%d/%Y")
 

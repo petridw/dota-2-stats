@@ -37,7 +37,8 @@ gem 'httparty'
 gem 'hashie'
 # Use Omniauth-steam strategy for securely logging in through steam
 gem 'omniauth-steam'
-
+# Use sidekiq for running API calls in background threads
+gem 'sidekiq'
 
 
 group :production do
