@@ -40,6 +40,8 @@ gem 'hashie'
 gem 'omniauth-steam'
 # Use sidekiq for running API calls in background threads
 gem 'sidekiq'
+# Use redis gem so that redistogo will work w sidekiq on heroku
+gem 'redis'
 
 
 group :production do

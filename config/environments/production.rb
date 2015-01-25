@@ -73,4 +73,8 @@ Rails.application.configure do
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
+
+  # config redis
+  ENV["REDISTOGO_URL"] = 'redis://username:password@my.host:6389'
+
 end
