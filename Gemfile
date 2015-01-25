@@ -38,10 +38,8 @@ gem 'httparty'
 gem 'hashie'
 # Use Omniauth-steam strategy for securely logging in through steam
 gem 'omniauth-steam'
-# Use sidekiq for running API calls in background threads
-gem 'sidekiq'
-# Use redis gem so that redistogo will work w sidekiq on heroku
-gem 'redis'
+# User sucker_punch for background queuing on one thread
+gem 'sucker_punch', '~> 1.0'
 
 
 group :production do

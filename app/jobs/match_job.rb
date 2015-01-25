@@ -1,5 +1,5 @@
-class MatchWorker
-  include Sidekiq::Worker
+class MatchJob
+  include SuckerPunch::Job
 
   def perform(match_id)
 
@@ -45,8 +45,6 @@ class MatchWorker
 
     match.save
 
-
   end
-
 
 end
