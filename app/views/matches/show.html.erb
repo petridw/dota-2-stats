@@ -1,0 +1,80 @@
+
+
+
+<div class="row">
+  <div class="h2 col-md-12">Match <%= @match.id %></div>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="h2">Radiant</div>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Player ID</th>
+              <th>Player Slot</th>
+              <th>Hero</th>
+              <th>Kills</th>
+              <th>Deaths</th>
+              <th>Assists</th>
+              <th>GPM</th>
+              <th>XPM</th>
+              <th>Last hits</th>
+            </tr>
+          </thead>
+          <% @match.players.each do |p| %>
+            <% if p.player_slot < 5 %>
+              <tr>
+                <td><%= p.id %></td>
+                <td><%= p.player_slot %></td>
+                <td><%= image_tag "http://cdn.dota2.com/apps/dota2/images/heroes/#{p.hero}_sb.png" %></td>
+                <td><%= p.kills %></td>
+                <td><%= p.deaths %></td>
+                <td><%= p.assists %></td>
+                <td><%= p.gold_per_min %></td>
+                <td><%= p.xp_per_min %></td>
+                <td><%= p.last_hits %></td>
+              </tr>
+            <% end %>
+          <% end %>
+        </table>
+      </div>
+  </div>
+  <div class="col-md-6">
+    <div class="h2">Dire</div>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Player ID</th>
+              <th>Player Slot</th>
+              <th>Hero</th>
+              <th>Kills</th>
+              <th>Deaths</th>
+              <th>Assists</th>
+              <th>GPM</th>
+              <th>XPM</th>
+              <th>Last hits</th>
+            </tr>
+          </thead>
+          <% @match.players.each do |p| %>
+            <% if p.player_slot > 5 %>
+              <tr>
+                <td><%= p.id %></td>
+                <td><%= p.player_slot %></td>
+                <td><%= link_to image_tag("http://cdn.dota2.com/apps/dota2/images/heroes/#{p.hero}_sb.png") %></td>
+                <td><%= p.kills %></td>
+                <td><%= p.deaths %></td>
+                <td><%= p.assists %></td>
+                <td><%= p.gold_per_min %></td>
+                <td><%= p.xp_per_min %></td>
+                <td><%= p.last_hits %></td>
+              </tr>
+            <% end %>
+          <% end %>
+        </table>
+      </div> 
+  </div>
+</div>
+

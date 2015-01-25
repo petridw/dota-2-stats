@@ -2,7 +2,7 @@ class Player
   include Mongoid::Document
   #id is account_id
   field :player_slot, type: Integer
-  field :hero_id, type: Integer
+  field :hero, type: String
   field :item_0, type: Integer
   field :item_1, type: Integer
   field :item_2, type: Integer

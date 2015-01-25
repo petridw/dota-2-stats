@@ -40,8 +40,6 @@ gem 'hashie'
 gem 'omniauth-steam'
 # Use sidekiq for running API calls in background threads
 gem 'sidekiq'
-# Use Puma for a better production web server
-gem 'puma'
 
 
 group :production do
