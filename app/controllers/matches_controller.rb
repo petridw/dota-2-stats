@@ -50,7 +50,7 @@ class MatchesController < ApplicationController
 
       # match_json = SteamController.get_match(params[:id])
       MatchWorker.perform_async(params[:id])
-      flash[:warning] = "This match is not yet in the database, but has been added to the queue for download. Please try again soon!"
+      flash[:warning] = "Match #{params[:id]} is not yet in the database, but has been added to the queue for download. Please try again soon!"
       redirect_to matches_path
 
     end
