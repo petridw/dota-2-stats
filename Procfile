@@ -1,2 +1,1 @@
-web: bin/puma -C config/puma.rb -p $PORT
-worker: bin/sidekiq
+worker: bundle exec sidekiq -c 5 -v
