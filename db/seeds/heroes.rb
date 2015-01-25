@@ -3,6 +3,14 @@ file = File.read(filename)
 
 heroes = JSON.parse(file)['heroes']
 
+
 heroes.each do |hero|
-  Hero.create(name: hero['name'], id: hero['id'])
+
+  hero_in_db = Hero.find(hero['id'].to_i)
+
+  if hero_in_db
+    hero_in_db.update(name: hero['name'])
+  else
+    Hero.create(name: hero['name'], id: hero['id'])
+  end
 end

@@ -5,5 +5,10 @@ file = File.read(filename)
 items = JSON.parse(file)['items']
 
 items.each do |item|
-  Item.create(name: item['name'], id: item['id'])
+  item_in_db = Item.find(item['id'].to_i) 
+  if item_in_db
+    item_in_db.update(name: item['name'])
+  else
+    Item.create(name: item['name'], id: item['id'])
+  end
 end

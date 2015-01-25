@@ -23,20 +23,25 @@ class MatchesController < ApplicationController
     matches_json.each do |match_json|
 
       match = Match.find(match_json['match_id'])
+
       if match == nil
-        # match_details = SteamController.get_match(match_json['match_id'])
-        # add_match(match_details)
+        MatchJob.new.async.perform(match_json['match_id'])
+
+        error = "Match #{match_json['match_id']} has not yet been loaded, but has been added to the queue for download."
+        match = Match.new(error: error)
       end
 
-      start_time = Time.at(match_json['start_time']).strftime("%m/%d/%Y")
+      @matches.push(match)
 
-      match_hash = {
-        match_id: match_json['match_id'],
-        start_time: start_time,
-        lobby_type: LOBBY_TYPES[match_json['lobby_type']]
-      }
+      # start_time = Time.at(match_json['start_time']).strftime("%m/%d/%Y")
 
-      @matches.push(match_hash)
+      # match_hash = {
+      #   match_id: match_json['match_id'],
+      #   start_time: start_time,
+      #   lobby_type: LOBBY_TYPES[match_json['lobby_type']]
+      # }
+
+      # @matches.push(match_hash)
     end
 
   end

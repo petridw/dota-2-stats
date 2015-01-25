@@ -1,6 +1,6 @@
 
 <div class="row">
-  <div class="h2 col-md-12">My recent games</div>
+  <div class="h2 col-md-12">MY DOTO</div>
 </div>
 
 <div class="row">
@@ -10,15 +10,21 @@
         <thead>
           <tr>
             <th>Match ID</th>
-            <th>Date</th>
-            <th>Lobby type</th>
+            <th>Start Time</th>
+            <th>Duration</th>
+            <th>Winner</th>
           </tr>
         </thead>
         <% @matches.each do |match| %>
           <tr>
-            <td><%= link_to match[:match_id], match_path(match[:match_id]) %></td>
-            <td><%= match[:start_time] %></td>
-            <td><%= match[:lobby_type] %></td>
+          <% if match.error %>
+            <td><%= match.error %></td>
+          <% else %>
+            <td><%= link_to match.id, match_path(match.id) %></td>
+            <td><%= match.start_time %></td>
+            <td><%= match.duration%></td>
+            <td><%= match.radiant_win ? "Radiant Victory" : "Dire Victory" %></td>
+          <% end %>
           </tr>
         <% end %>
       </table>
