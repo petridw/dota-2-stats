@@ -43,6 +43,8 @@ gem 'sidekiq'
 # Use redis gem so that redistogo will work w sidekiq on heroku
 gem 'redis'
 
+gem 'puma'
+
 
 group :production do
   gem 'rails_12factor'
