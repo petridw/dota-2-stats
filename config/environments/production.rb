@@ -75,6 +75,6 @@ Rails.application.configure do
   config.log_formatter = ::Logger::Formatter.new
 
   # config redis
-  ENV["REDISTOGO_URL"] = 'redis://username:password@viperfish.redistogo.com:9247/'
+  ENV["REDISTOGO_URL"] = 'redis://username:password@viperfish.redistogo.com:9247'
 
 end
