@@ -23,29 +23,33 @@ class MatchesController < ApplicationController
 
     @matches = []
 
-    matches_json.each do |match_json|
+    if matches_json
+      matches_json.each do |match_json|
 
-      match = Match.find(match_json['match_id'])
+        match = Match.find(match_json['match_id'])
 
-      if match == nil
+        if match == nil
 
-        MatchJob.new.async.perform(match_json['match_id'])
+          MatchJob.new.async.perform(match_json['match_id'])
 
-        error = match_json['match_id']
-        match = Match.new(error: error)
+          error = match_json['match_id']
+          match = Match.new(error: error)
+        end
+
+        @matches.push(match)
+
+        # start_time = Time.at(match_json['start_time']).strftime("%m/%d/%Y")
+
+        # match_hash = {
+        #   match_id: match_json['match_id'],
+        #   start_time: start_time,
+        #   lobby_type: LOBBY_TYPES[match_json['lobby_type']]
+        # }
+
+        # @matches.push(match_hash)
       end
-
-      @matches.push(match)
-
-      # start_time = Time.at(match_json['start_time']).strftime("%m/%d/%Y")
-
-      # match_hash = {
-      #   match_id: match_json['match_id'],
-      #   start_time: start_time,
-      #   lobby_type: LOBBY_TYPES[match_json['lobby_type']]
-      # }
-
-      # @matches.push(match_hash)
+    else
+      flash[:danger] = "Could not load match data for Steam ID #{current_user.steam_id}. You probably need to enable sharing of match history in your Dota 2 options."
     end
 
   end
