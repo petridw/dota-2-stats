@@ -64,7 +64,13 @@
           <% dire.liveplayers.each do |p| %>
             <tr>
               <td><%= p.id %></td>
-              <td><%= image_tag("http://cdn.dota2.com/apps/dota2/images/heroes/#{p.hero}_sb.png") %></td>
+              <td>
+                <% if p.hero == "No hero yet" %>
+                  <%= p.hero %>
+                <% else %>
+                  <%= image_tag "http://cdn.dota2.com/apps/dota2/images/heroes/#{p.hero}_sb.png" %>
+                <% end %>
+              </td>
               <td><%= p.kills %></td>
               <td><%= p.deaths %></td>
               <td><%= p.assists %></td>
