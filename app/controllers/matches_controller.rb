@@ -18,6 +18,9 @@ class MatchesController < ApplicationController
 
     matches_json = SteamController.get_match_history(current_user.steam_id, nil)
 
+    # only let 5 new matches get grabbed each time?
+    count = 0
+
     @matches = []
 
     matches_json.each do |match_json|
@@ -25,7 +28,11 @@ class MatchesController < ApplicationController
       match = Match.find(match_json['match_id'])
 
       if match == nil
-        MatchJob.new.async.perform(match_json['match_id'])
+
+        if count < 5
+          MatchJob.new.async.perform(match_json['match_id'])
+          count += 1
+        end
 
         error = match_json['match_id']
         match = Match.new(error: error)
