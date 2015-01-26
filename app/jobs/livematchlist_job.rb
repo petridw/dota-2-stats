@@ -5,6 +5,7 @@ class LivematchlistJob
 
     matchlist_json = SteamController.get_live_games
     League.update_leagues
+    Livematchlist.clean
 
     livematchlist = Livematchlist.new
 
