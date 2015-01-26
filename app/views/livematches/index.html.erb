@@ -44,9 +44,15 @@
                   <%= match.series_type %>
                 <% end %>
               </td>
-              <td><%= radiant.name %></td>
-              <td><%= radiant.kills %> - <%= dire.kills %></td>
-              <td><%= dire.name %></td>
+              <% if radiant && dire %>
+                <td><%= radiant.name %></td>
+                <td><%= radiant.kills %> - <%= dire.kills %></td>
+                <td><%= dire.name %></td>
+              <% else %>
+                <td>Error</td>
+                <td>Loading</td>
+                <td>Data</td>
+              <% end %>
               <td>
                   <% minutes = (match.duration.to_i / 60) %>
                   <% seconds = (match.duration.to_i % 60) %>
