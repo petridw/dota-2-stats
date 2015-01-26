@@ -40,6 +40,8 @@
               <td>
                 <% if match.series_type == 0 %>
                   BO1
+                <% elsif match.series_type == 1 %>
+                  BO3
                 <% else %>
                   <%= match.series_type %>
                 <% end %>
