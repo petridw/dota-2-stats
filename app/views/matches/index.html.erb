@@ -17,30 +17,33 @@
             <th>Result</th>
           </tr>
         </thead>
+
         <% @matches.each do |match| %>
-
-          <!-- figure out if player won the game or not -->
-          <% player = match.players.find(current_user.steam_id_32.to_i) %>
-          <% side = player.player_slot < 5 ? true : false %>
-          <% won = side == match.radiant_win ? true : false %>
-
           <tr>
+
           <% if match.error %>
-            <td colspan="4"><%= link_to match.error, match_path(match.error) %> is not in the database yet, but has been added to the download queue. If you try again soon it should be there!</td>
+            <td colspan="4"><%= link_to match.error, match_path(match.error) %> is not in the database yet, but it's in the download queue!</td>
           <% else %>
+              <!-- figure out if player won the game or not -->
+              <% player = match.players.find(current_user.steam_id_32.to_i) %>
+              <% side = player.player_slot < 5 ? true : false %>
+              <% won = side == match.radiant_win ? true : false %>
+
             <td><%= link_to match.id, match_path(match.id) %></td>
             <td><%= Time.at(match.start_time).strftime("%m/%d/%Y %H:%M") %></td>
             <td>
-                  <% minutes = (match.duration.to_i / 60) %>
-                  <% seconds = (match.duration.to_i % 60) %>
-                  <%= "#{format('%02d', minutes)}:#{format('%02d', seconds)}" %>
+              <% minutes = (match.duration.to_i / 60) %>
+              <% seconds = (match.duration.to_i % 60) %>
+              <%= "#{format('%02d', minutes)}:#{format('%02d', seconds)}" %>
             </td>
             <td class="<%= won ? "match-victory" : "match-defeat" %>">
               <%= won ? "Victory" : "Defeat" %>
             </td>
           <% end %>
+
           </tr>
         <% end %>
+
       </table>
     </div>
   </div>

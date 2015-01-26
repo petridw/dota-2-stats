@@ -29,10 +29,7 @@ class MatchesController < ApplicationController
 
       if match == nil
 
-        if count < 5
-          MatchJob.new.async.perform(match_json['match_id'])
-          count += 1
-        end
+        MatchJob.new.async.perform(match_json['match_id'])
 
         error = match_json['match_id']
         match = Match.new(error: error)
