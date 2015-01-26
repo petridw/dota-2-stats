@@ -10,8 +10,6 @@ class ApplicationController < ActionController::Base
 
   def sec_to_str(total_seconds)
 
-    str = ""
-
     minutes = total_seconds / 60
     seconds = total_seconds % 60
 

@@ -4,42 +4,63 @@
 <div class="row">
   <div class="col-md-12">
     <div class="table-responsive">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Match ID</th>
-            <th><%= link_to "Spectators" %></th>
-            <th><%= link_to "League" %></th>
-            <th>Series Type</th>
-            <th>Radiant Kills</th>
-            <th>Dire Kills</th>
-            <th>Game Time</th>
-          </tr>
-        </thead>
-        <% @matches.each do |match| %>
-          <tr>
-            <td><%= link_to match[:match_id], live_match_path(match[:match_id]) %></td>
-            <td><%= match[:spectators] %></td>
-            <td>
-              <% if match[:league] %>
-                <%= link_to match[:league].name, match[:league].url %>
-              <% else %>
-                Unknown League
-              <% end %>
-            </td>
-            <td>
-              <% if match[:series_type]==0 %>
-                BO1
-              <% else %>
-                <%= match[:series_type] %>
-              <% end %>
-            </td>
-            <td><%= match[:radiant_kills] %></td>
-            <td><%= match[:dire_kills] %></td>
-            <td><%= match[:duration] %></td>
-          </tr>
-        <% end %>
-      </table>
+
+    <% if @livematchlist %>
+
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Match ID</th>
+              <th>Spectators</th>
+              <th>League</th>
+              <th>Series Type</th>
+              <th>Radiant</th>
+              <th>Kills</th>
+              <th>Dire</th>
+              <th>Game Time</th>
+            </tr>
+          </thead>
+          <% @livematchlist.livematches.each do |match| %>
+            
+            <!-- Set up teams and other variables -->
+            <% radiant = match.liveteams.find("Radiant") %>
+            <% dire = match.liveteams.find("Dire") %>
+            <% league = League.find(match.league_id.to_i) %>
+
+            <tr>
+              <td><%= link_to match.id, live_match_path(match.id) %></td>
+              <td><%= match.spectators %></td>
+              <td>
+                <% if league %>
+                  <%= league.name %>
+                <% else %>
+                  <%= "Unknown league" %>
+                <% end %>
+              </td>
+              <td>
+                <% if match.series_type == 0 %>
+                  BO1
+                <% else %>
+                  <%= match.series_type %>
+                <% end %>
+              </td>
+              <td><%= radiant.name %></td>
+              <td><%= radiant.kills %> - <%= dire.kills %></td>
+              <td><%= dire.name %></td>
+              <td>
+                  <% minutes = (match.duration.to_i / 60) %>
+                  <% seconds = (match.duration.to_i % 60) %>
+                  <%= "#{format('%02d', minutes)}:#{format('%02d', seconds)}" %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+
+      <% end %>
+
+
     </div>
   </div>
+  <div class="h4"><%= @last_updated_string %></div>
+
 </div>

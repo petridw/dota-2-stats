@@ -2,42 +2,39 @@ class LivematchesController < ApplicationController
 
 
   def index
-    matches_json = SteamController.get_live_games
-    @matches = []
 
-    matches_json.each do |match_json|
+    @livematchlist = Livematchlist.last
 
-      league = League.find(match_json['league_id']) || nil
+    if @livematchlist == nil
+      flash.now[:danger] = "Can't find live match list! Getting one now. Please try again soon."
+      LivematchlistJob.new.async.perform
+      @last_updated_string = ""
+    else
 
-      League.update_leagues unless league
+      last_updated = Time.now.to_i - @livematchlist.created_at.to_time.to_i
 
-      if match_json['scoreboard']
-        radiant_kills = match_json['scoreboard']['radiant']['score']
-        dire_kills = match_json['scoreboard']['dire']['score']
-        duration = sec_to_str(match_json['scoreboard']['duration'].to_i)
-      else
-        duration = "Pre-game"
-        radiant_kills = 0
-        dire_kills = 0
+      if last_updated > 30
+        flash.now[:warning] = "Match data was last updated #{@livematchlist.updated_at}. Updating now!"
+        LivematchlistJob.new.async.perform
       end
 
+      minutes = last_updated / 60
+      seconds = last_updated % 60
+      hours = last_updated / 3600
 
-      match_hash = {
-        match_id: match_json['match_id'],
-        spectators: match_json['spectators'],
-        duration: duration,
-        league: league,
-        series_type: match_json['series_type'],
-        radiant_kills: radiant_kills,
-        dire_kills: dire_kills
-      }
-
-      @matches.push(match_hash)
+      @last_updated_string = "#{seconds} seconds ago."
+      @last_updated_string.insert(0, "#{minutes} minutes, ") unless minutes < 1
+      @last_updated_string.insert(0, "#{hours} hours, ") unless hours < 1
+      @last_updated_string.insert(0, "This data was last updated ")
 
     end
   end
 
   def show
+
+    @livematch = Livematchlist.last.livematches.find(params[:id])
+
+    
 
   end
 

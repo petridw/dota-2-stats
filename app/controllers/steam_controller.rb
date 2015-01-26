@@ -7,7 +7,10 @@ class SteamController < ApplicationController
   def auth_callback
     auth = request.env['omniauth.auth']
 
-    current_user.update(steam_id: auth.uid, steam_nickname: auth.info['nickname'], steam_pic: auth.info['image'])
+    current_user.update(steam_id: auth.uid,
+                        steam_id_32: (auth.uid.to_i - 76561197960265728),
+                        steam_nickname: auth.info['nickname'],
+                        steam_pic: auth.info['image'])
     flash[:success] = "Successfully synced your Steam account!"
 
     redirect_to settings_path

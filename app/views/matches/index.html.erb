@@ -12,18 +12,25 @@
             <th>Match ID</th>
             <th>Start Time</th>
             <th>Duration</th>
-            <th>Winner</th>
+            <th>Result</th>
           </tr>
         </thead>
         <% @matches.each do |match| %>
+          <% player = match.players.find(current_user.steam_id_32.to_i) %>
+          <% side = player.player_slot < 5 ? true : false %>
+          <% won = side == match.radiant_win ? true : false %>
           <tr>
           <% if match.error %>
-            <td><%= match.error %></td>
+            <td colspan="4"><%= link_to match.error, match_path(match.error) %> is not in the database yet, but has been added to the download queue. If you try again soon it should be there!</td>
           <% else %>
             <td><%= link_to match.id, match_path(match.id) %></td>
             <td><%= match.start_time %></td>
-            <td><%= match.duration%></td>
-            <td><%= match.radiant_win ? "Radiant Victory" : "Dire Victory" %></td>
+            <td>
+                  <% minutes = (match.duration.to_i / 60) %>
+                  <% seconds = (match.duration.to_i % 60) %>
+                  <%= "#{format('%02d', minutes)}:#{format('%02d', seconds)}" %>
+            </td>
+            <td><%= won ? "Victory" : "Defeat" %></td>
           <% end %>
           </tr>
         <% end %>

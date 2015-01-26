@@ -27,7 +27,7 @@ class MatchesController < ApplicationController
       if match == nil
         MatchJob.new.async.perform(match_json['match_id'])
 
-        error = "Match #{match_json['match_id']} has not yet been loaded, but has been added to the queue for download."
+        error = match_json['match_id']
         match = Match.new(error: error)
       end
 

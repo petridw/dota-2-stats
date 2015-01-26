@@ -4,9 +4,6 @@ class League
   field :description, type: String
   field :url, type: String
 
-  has_many :matches
-
-
   def self.update_leagues
     leagues = SteamController.get_leagues
 
