@@ -13,7 +13,7 @@ class LivematchesController < ApplicationController
 
       last_updated = Time.now.to_i - @livematchlist.created_at.to_time.to_i
 
-      if last_updated > 30
+      if last_updated > 60
         flash.now[:warning] = "Match data was last updated #{@livematchlist.updated_at}. Updating now!"
         LivematchlistJob.new.async.perform
       end
@@ -34,7 +34,7 @@ class LivematchesController < ApplicationController
 
     @livematch = Livematchlist.last.livematches.find(params[:id])
 
-    
+
 
   end
 
