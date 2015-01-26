@@ -32,7 +32,7 @@
               <td><%= match.spectators %></td>
               <td>
                 <% if league %>
-                  <%= league.name %>
+                  <%= link_to league.name, league.url %>
                 <% else %>
                   <%= "Unknown league" %>
                 <% end %>
