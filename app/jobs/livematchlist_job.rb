@@ -23,6 +23,9 @@ class LivematchlistJob
       radiant = Liveteam.new
       dire = Liveteam.new
 
+      radiant.name = "Radiant"
+      dire.name = "Dire"
+
       if match_json['scoreboard']
 
         livematch.duration = match_json['scoreboard']['duration']
@@ -57,6 +60,7 @@ class LivematchlistJob
             hero_name = "No hero yet"
           end
 
+          liveplayer.id = p['account_id']
           liveplayer.player_slot = p['player_slot']
           liveplayer.hero = hero_name
           liveplayer.item_0 = p['item0']
@@ -94,7 +98,8 @@ class LivematchlistJob
             hero_name = "No hero yet"
           end
 
-          liveplayer.player_slot = p['']
+          liveplayer.id = p['account_id']
+          liveplayer.player_slot = p['player_slot']
           liveplayer.hero = hero_name
           liveplayer.item_0 = p['item0']
           liveplayer.item_1 = p['item1']
@@ -123,15 +128,11 @@ class LivematchlistJob
       if match_json['radiant_team']
         radiant.name = match_json['radiant_team']['team_name']
         radiant.team_logo = match_json['radiant_team']['team_logo']
-      else
-        radiant.name = "Radiant"
       end
 
       if match_json['dire_team']
         dire.name = match_json['dire_team']['team_name']
         dire.team_logo = match_json['dire_team']['team_logo']
-      else
-        dire.name = "Dire"
       end
 
       livematch.liveteams.push(radiant)

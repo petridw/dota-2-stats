@@ -17,8 +17,15 @@
     <div class="collapse navbar-collapse" id="navbar-links">
 
       <ul class="nav navbar-nav">
-        <li><%= link_to "Live Games", live_matches_path  %></li>
-        <li><%= link_to "My Matches", matches_path %></li>
+        <li>
+          <%= link_to "Live Games", live_matches_path  %>
+        </li>
+        <li>
+          <%= link_to "My Matches", matches_path %>
+        </li>
+        <li>
+          <%= link_to "About", about_path %>
+        </li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
@@ -39,12 +46,6 @@
           <li><%= link_to 'Sign up', signup_path %></li>
         <% end %>
       </ul>
-
-      <%= form_tag root_path, :method => :get, :class => "navbar-form navbar-right" do %>
-        <div class="form-group">
-          <%= text_field_tag :search_string, nil, class: "form-control", placeholder: "Search" %>
-        </div>
-      <% end %>
 
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->

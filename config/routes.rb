@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
 #application
   root 'livematches#index'
+  get '/about' => 'application#about', as: :about
 
 #users
   get '/signup' => 'users#new', as: :signup

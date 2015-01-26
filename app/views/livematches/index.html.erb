@@ -61,6 +61,20 @@
 
     </div>
   </div>
-  <div class="h4"><%= @last_updated_string %></div>
 
 </div>
+
+<div class="row">
+  <div class="h5 col-md-12"><%= @last_updated_string %></div>
+</div>
+
+<script>
+  window.onload = function() {
+    if (<%= @pagerefresh %>) {
+      setTimeout(reload, 3000)
+    }
+  }
+  function reload() {
+    window.location.reload()
+  }
+</script>

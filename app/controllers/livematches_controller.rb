@@ -2,6 +2,7 @@ class LivematchesController < ApplicationController
 
 
   def index
+    @pagerefresh = false
 
     @livematchlist = Livematchlist.last
 
@@ -14,8 +15,9 @@ class LivematchesController < ApplicationController
       last_updated = Time.now.to_i - @livematchlist.created_at.to_time.to_i
 
       if last_updated > 60
-        flash.now[:warning] = "Match data was last updated #{@livematchlist.updated_at}. Updating now!"
+        flash.now[:warning] = "Updating match data now!"
         LivematchlistJob.new.async.perform
+        @pagerefresh = true
       end
 
       minutes = last_updated / 60
@@ -32,8 +34,7 @@ class LivematchesController < ApplicationController
 
   def show
 
-    @livematch = Livematchlist.last.livematches.find(params[:id])
-
+    @livematch = Livematchlist.last.livematches.find(params[:id].to_i)
 
 
   end
