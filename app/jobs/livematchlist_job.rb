@@ -4,12 +4,58 @@ class LivematchlistJob
   def perform
 
     matchlist_json = SteamController.get_live_games
+
     League.update_leagues
     Livematchlist.clean
 
     livematchlist = Livematchlist.new
 
     matchlist_json.each do |match_json|
+
+
+      #get and store player data if it's there
+      if match_json['players']
+        match_json['players'].each do |p|
+
+          #make sure player is on a team and not a caster
+          if (p['team'] == 0) || (p['team'] == 1)
+
+            #store pro player data if I don't have it already
+            pro_player = Proplayer.find(p['account_id'])
+
+            if pro_player
+              puts "Found proplayer #{p['name']} in database."
+              pro_player.aliases.push(p['name']) unless pro_player.aliases.include? p['name']
+            else
+              pro_player = Proplayer.new(
+                id: p['account_id'],
+                aliases: [p['name']],
+                teams: []
+                )
+            end
+
+            #if team data exists then add that to the proplayer data
+            if (p['team'] == 0) && (match_json['radiant_team'])
+              unless pro_player.teams.include? match_json['radiant_team']['team_name']
+                pro_player.teams.push(match_json['radiant_team']['team_name'])
+              end
+            elsif (p['team'] == 1) && (match_json['dire_team'])
+              unless pro_player.teams.include? match_json['dire_team']['team_name']
+                pro_player.teams.push(match_json['dire_team']['team_name'])
+              end
+            end
+
+            if pro_player.save
+              puts "Saved pro player data successfully."
+            else
+              puts "Was unable to save pro player data for #{p['name']}"
+            end
+
+          end
+        end
+      end
+
+
 
     livematch = Livematch.new(
                     id: match_json['match_id'],
