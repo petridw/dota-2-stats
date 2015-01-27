@@ -26,11 +26,14 @@ class LivematchlistJob
             if pro_player
               puts "Found proplayer #{p['name']} in database."
               pro_player.aliases.push(p['name']) unless pro_player.aliases.include? p['name']
+              #only update tier if this tier is higher than player's previous tier
+              pro_player.tier = match_json['league_tier'] if match_json['league_tier'] < pro_player.tier
             else
               pro_player = Proplayer.new(
                 id: p['account_id'],
                 aliases: [p['name']],
-                teams: []
+                teams: [],
+                tier: match_json['league_tier']
                 )
             end
 
@@ -196,26 +199,3 @@ class LivematchlistJob
   end
 
 end
-
-    #   if match_json['scoreboard']
-    #     radiant_kills = match_json['scoreboard']['radiant']['score']
-    #     dire_kills = match_json['scoreboard']['dire']['score']
-    #     duration = sec_to_str(match_json['scoreboard']['duration'].to_i)
-    #   else
-    #     duration = "Pre-game"
-    #     radiant_kills = 0
-    #     dire_kills = 0
-    #   end
-
-
-    #   match_hash = {
-    #     match_id: match_json['match_id'],
-    #     spectators: match_json['spectators'],
-    #     duration: duration,
-    #     league: league,
-    #     series_type: match_json['series_type'],
-    #     radiant_kills: radiant_kills,
-    #     dire_kills: dire_kills
-    #   }
-
-    #   @matches.push(match_hash)

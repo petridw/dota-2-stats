@@ -3,5 +3,6 @@ class Proplayer
 
   field :aliases, type: Array
   field :teams, type: Array
+  field :tier, type: Integer
   
 end
