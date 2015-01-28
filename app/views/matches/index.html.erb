@@ -13,6 +13,7 @@
       <table class="table table-striped">
         <thead>
           <tr>
+            <th></th>
             <th>Match ID</th>
             <th>Start Time</th>
             <th>Duration</th>
@@ -20,8 +21,8 @@
           </tr>
         </thead>
 
-        <% @matches.each do |match| %>
-          <tr>
+        <% @matches.each_with_index do |match, index| %>
+          <tr class="<%= "match-has-pro" if match.has_pro %>">
 
           <% if match.error  %>
             <td colspan="4"><%= link_to match.error, match_path(match.error) %> is not in the database yet, but it's in the download queue!</td>
@@ -35,6 +36,7 @@
                 <% won = "Error" %>
               <% end %>
 
+            <td><%= index + 1 %></td>
             <td><%= link_to match.id, match_path(match.id) %></td>
             <td><%= Time.at(match.start_time).strftime("%m/%d/%Y %H:%M") %></td>
             <td>

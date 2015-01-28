@@ -2,15 +2,18 @@ class MatchJob
   include SuckerPunch::Job
 
   def perform(match_id, update)
+    puts "UPDATE = #{update}"
 
     match_json = SteamController.get_match(match_id)
 
     #match may have been added by another thread, so don't add it if it's already there!
     #but, if update is true, then update this match no matter what
+    match = Match.find(match_id.to_i)
 
-    if (Match.find(match_id.to_s) == nil) || update
+    if (match == nil) || update
 
-      match = Match.new
+      match = Match.new if (match == nil)
+
       match.has_pro = false
 
       players = match_json['players']

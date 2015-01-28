@@ -32,7 +32,7 @@ class MatchesController < ApplicationController
       matches_json.each do |match_json|
         match = Match.find(match_json['match_id'])
 
-        if match == nil
+        if match == nil || reload
 
           MatchJob.new.async.perform(match_json['match_id'], reload)
 
@@ -45,6 +45,10 @@ class MatchesController < ApplicationController
 
     else
       flash[:danger] = "Could not load match data for Steam ID #{current_user.steam_id}. You probably need to enable sharing of match history in your Dota 2 options."
+    end
+
+    if reload
+      redirect_to matches_path
     end
 
   end
