@@ -69,7 +69,10 @@ class MatchesController < ApplicationController
 
     end
 
+  end
 
+  def indexpro
+    matches_json = SteamController.get_match_history(current_user.steam_id, nil)
   end
 
 
