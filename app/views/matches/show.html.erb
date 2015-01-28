@@ -29,7 +29,13 @@
           <% @match.players.each do |p| %>
             <% if p.player_slot < 5 %>
               <tr class="<%= "match-has-pro" if p.pro_player %>">
-                <td><%= p.id %></td>
+                <td>
+                  <% if p.pro_player %>
+                    <%= link_to p.id, proplayer_path(p.id) %>
+                  <% else %>
+                    <%= p.id %>
+                  <% end %>
+                </td>
                 <td><%= image_tag "http://cdn.dota2.com/apps/dota2/images/heroes/#{p.hero}_sb.png" %></td>
                 <td><%= p.kills %></td>
                 <td><%= p.deaths %></td>
@@ -62,7 +68,13 @@
           <% @match.players.each do |p| %>
             <% if p.player_slot > 5 %>
               <tr class="<%= "match-has-pro" if p.pro_player %>">
-                <td><%= p.id %></td>
+                <td>
+                  <% if p.pro_player %>
+                    <%= link_to p.id, proplayer_path(p.id) %>
+                  <% else %>
+                    <%= p.id %>
+                  <% end %>
+                </td>
                 <td><%= image_tag("http://cdn.dota2.com/apps/dota2/images/heroes/#{p.hero}_sb.png") %></td>
                 <td><%= p.kills %></td>
                 <td><%= p.deaths %></td>
