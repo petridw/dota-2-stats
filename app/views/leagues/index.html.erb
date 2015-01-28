@@ -16,7 +16,7 @@
         <tr>
           <td><%= truncate(l.name, length: 45) %></td>
           <td><%= link_to truncate("#{l.url}", length: 45), l.url%></td>
-          <td>Last active date</td>
+          <td><%= l.last_active.strftime("%m/%d/%Y") %></td>
         </tr>
       <% end %>
     </table>

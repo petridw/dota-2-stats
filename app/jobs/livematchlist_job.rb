@@ -36,6 +36,8 @@ class LivematchlistJob
               puts "Found proplayer #{p['name']} in database."
               pro_player.aliases.push(p['name']) unless pro_player.aliases.include? p['name']
               pro_player.tier = match_json['league_tier'] if match_json['league_tier'] != nil
+              pro_player.last_active = DateTime.now
+              pro_player.last_league = league.name if league
             else
               pro_player = Proplayer.new(
                 id: p['account_id'],

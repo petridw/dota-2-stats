@@ -5,7 +5,7 @@ class ProplayersController < ApplicationController
   end
 
   def show
-    @proplayer = Proplayer.find(params[:id])
+    @proplayer = Proplayer.find(params[:id].to_i)
   end
 
 end

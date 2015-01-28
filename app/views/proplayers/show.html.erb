@@ -1,0 +1,36 @@
+<div class="row">
+  <div class="h2 col-md-12"><%= "#{@proplayer.aliases[-1]}" %></div>
+</div>
+
+<div class="row">
+  <div class="col-sm-2"></div>
+  <div class="col-sm-4">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Known aliases</th>
+        </tr>
+      </thead>
+      <% @proplayer.aliases.each do |a| %>
+        <tr>
+          <td><%= a %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+  <div class="col-sm-4">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Teams appeared on</th>
+        </tr>
+      </thead>
+      <% @proplayer.teams.each do |t| %>
+        <tr>
+          <td><%= t %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+  <div class="col-sm-2"></div>
+</div>
