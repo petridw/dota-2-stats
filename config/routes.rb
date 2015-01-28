@@ -31,7 +31,11 @@ Rails.application.routes.draw do
 # leagues
   get '/leagues' => 'leagues#index', as: :leagues
 
-# resources
+# proplayers
+  get '/proplayers' => 'proplayers#index', as: :proplayers
+  get '/proplayers/:id' => 'proplayers#show', as: :proplayer
+
+# resources, so far only users needs all resources
   resources :users
 
   # The priority is based upon order of creation: first created -> highest priority.
