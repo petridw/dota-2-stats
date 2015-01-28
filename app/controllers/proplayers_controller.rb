@@ -1,7 +1,7 @@
 class ProplayersController < ApplicationController
  
   def index
-    @proplayers = Proplayer.all
+    @proplayers = Proplayer.all.order_by(tier: :desc, last_active: :desc)
   end
 
   def show
