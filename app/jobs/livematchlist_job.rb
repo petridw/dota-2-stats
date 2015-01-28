@@ -12,6 +12,15 @@ class LivematchlistJob
 
     matchlist_json.each do |match_json|
 
+      #update league last_active date
+      puts "League ID is #{match_json['league_id']}. Looking dat shit up."
+      league = League.find(match_json['league_id'].to_i)
+      league.last_active = DateTime.now if league
+      if league.save
+        puts "Saved league date!"
+      else
+        puts "Couldn't save league date!"
+      end
 
       #get and store player data if it's there
       if match_json['players']

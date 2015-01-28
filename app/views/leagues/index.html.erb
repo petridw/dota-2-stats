@@ -2,20 +2,24 @@
   <div class="h2 col-md-12">Leagues</div>
 </div>
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
     <table class="table table-striped">
       <thead>
         <tr>
           <th>Name</th>
           <th>League URL</th>
+          <th>Last active</th>
         </tr>
       </thead>
       <% @leagues.each do |l| %>
         <tr>
-          <td><%= l.name %></td>
-          <td><%= link_to "#{l.url}", l.url%></td>
+          <td><%= truncate(l.name, length: 45) %></td>
+          <td><%= link_to truncate("#{l.url}", length: 45), l.url%></td>
+          <td>Last active date</td>
         </tr>
       <% end %>
     </table>
   </div>
+  <div class="col-md-2"></div>
 </div>
