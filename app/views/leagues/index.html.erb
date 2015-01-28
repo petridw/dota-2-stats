@@ -7,14 +7,12 @@
       <thead>
         <tr>
           <th>Name</th>
-          <th>ID</th>
           <th>League URL</th>
         </tr>
       </thead>
       <% @leagues.each do |l| %>
         <tr>
           <td><%= l.name %></td>
-          <td><%= l.id %></td>
           <td><%= link_to "#{l.url}", l.url%></td>
         </tr>
       <% end %>
