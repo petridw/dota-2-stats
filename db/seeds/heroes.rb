@@ -10,6 +10,7 @@ heroes.each do |hero|
 
   if hero_in_db
     hero_in_db.update(name: hero['name'])
+    hero_in_db.save
   else
     Hero.create(name: hero['name'], id: hero['id'])
   end
