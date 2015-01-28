@@ -16,38 +16,33 @@ class MatchesController < ApplicationController
 
   def index
 
-    matches_json = SteamController.get_match_history(current_user.steam_id, nil)
+    if params[:reload]
+      reload = params[:reload]
+      flash[:info] = "Your match data will be resynced!"
+    else
+      reload = false
+    end
 
-    # only let 5 new matches get grabbed each time?
-    count = 0
+    matches_json = SteamController.get_match_history(current_user.steam_id, nil)
 
     @matches = []
 
     if matches_json
-      matches_json.each do |match_json|
 
+      matches_json.each do |match_json|
         match = Match.find(match_json['match_id'])
 
         if match == nil
 
-          MatchJob.new.async.perform(match_json['match_id'])
+          MatchJob.new.async.perform(match_json['match_id'], reload)
 
           error = match_json['match_id']
           match = Match.new(error: error)
         end
 
         @matches.push(match)
-
-        # start_time = Time.at(match_json['start_time']).strftime("%m/%d/%Y")
-
-        # match_hash = {
-        #   match_id: match_json['match_id'],
-        #   start_time: start_time,
-        #   lobby_type: LOBBY_TYPES[match_json['lobby_type']]
-        # }
-
-        # @matches.push(match_hash)
       end
+
     else
       flash[:danger] = "Could not load match data for Steam ID #{current_user.steam_id}. You probably need to enable sharing of match history in your Dota 2 options."
     end
@@ -71,8 +66,27 @@ class MatchesController < ApplicationController
 
   end
 
-  def indexpro
+  def pro
+    #find games vs or with pro players only
     matches_json = SteamController.get_match_history(current_user.steam_id, nil)
+
+    @matches = []
+
+    if matches_json
+      matches_json.each do |match_json|
+
+        match = Match.find(match_json['match_id'])
+
+        if match == nil
+          MatchJob.new.async.perform(match_json['match_id'])
+        else
+            @matches.push(match) if match.has_pro
+        end
+
+      end
+    else
+      flash[:danger] = "Could not load match data for Steam ID #{current_user.steam_id}. You probably need to enable sharing of match history in your Dota 2 options."
+    end
   end
 
 

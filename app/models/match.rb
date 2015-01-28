@@ -6,6 +6,7 @@ class Match
   field :duration, type: Integer
   field :start_time, type: Integer
   field :error, type: String
+  field :has_pro, type: Boolean
 
   embeds_many :players
 end

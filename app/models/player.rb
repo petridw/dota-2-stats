@@ -22,6 +22,7 @@ class Player
   field :hero_healing, type: Integer
   field :level, type: Integer
   field :gold_spent, type: Integer
+  field :pro_player, type: Boolean
 
   embedded_in :match
 end

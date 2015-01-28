@@ -1,18 +1,30 @@
 class MatchJob
   include SuckerPunch::Job
 
-  def perform(match_id)
+  def perform(match_id, update)
 
     match_json = SteamController.get_match(match_id)
 
     #match may have been added by another thread, so don't add it if it's already there!
-    unless Match.find(match_id.to_s)
+    #but, if update is true, then update this match no matter what
+
+    if (Match.find(match_id.to_s) == nil) || update
 
       match = Match.new
+      match.has_pro = false
 
       players = match_json['players']
 
       players.each do |p|
+
+        #check if player is pro
+        if Proplayer.find(p['account_id'].to_i)
+          pro = true
+          match.has_pro = true
+        else
+          pro = false
+        end
+
         hero_name = Hero.find(p['hero_id']).name.downcase.gsub(" ", "_")
         match.players.push(
           Player.new(
@@ -37,7 +49,8 @@ class MatchJob
             hero_damage: p['hero_damage'],
             tower_damage: p['tower_damage'],
             hero_healing: p['hero_healing'],
-            gold_spent: p['gold_spent']
+            gold_spent: p['gold_spent'],
+            pro_player: pro
           ))
       end
 
