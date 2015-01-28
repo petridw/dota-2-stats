@@ -13,6 +13,7 @@ class MatchJob
     if (match == nil) || update
 
       match = Match.new if (match == nil)
+      match.players = []
 
       match.has_pro = false
 

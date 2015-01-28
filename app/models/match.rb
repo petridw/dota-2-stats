@@ -7,6 +7,7 @@ class Match
   field :start_time, type: Integer
   field :error, type: String
   field :has_pro, type: Boolean
+  field :syncing, type: Boolean
 
   embeds_many :players
 end

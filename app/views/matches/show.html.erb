@@ -17,7 +17,6 @@
           <thead>
             <tr>
               <th>Player ID</th>
-              <th>Player Slot</th>
               <th>Hero</th>
               <th>Kills</th>
               <th>Deaths</th>
@@ -31,7 +30,6 @@
             <% if p.player_slot < 5 %>
               <tr>
                 <td><%= p.id %></td>
-                <td><%= p.player_slot %></td>
                 <td><%= image_tag "http://cdn.dota2.com/apps/dota2/images/heroes/#{p.hero}_sb.png" %></td>
                 <td><%= p.kills %></td>
                 <td><%= p.deaths %></td>
@@ -52,7 +50,6 @@
           <thead>
             <tr>
               <th>Player ID</th>
-              <th>Player Slot</th>
               <th>Hero</th>
               <th>Kills</th>
               <th>Deaths</th>
@@ -66,7 +63,6 @@
             <% if p.player_slot > 5 %>
               <tr>
                 <td><%= p.id %></td>
-                <td><%= p.player_slot %></td>
                 <td><%= image_tag("http://cdn.dota2.com/apps/dota2/images/heroes/#{p.hero}_sb.png") %></td>
                 <td><%= p.kills %></td>
                 <td><%= p.deaths %></td>
@@ -78,7 +74,7 @@
             <% end %>
           <% end %>
         </table>
-      </div> 
+      </div>
   </div>
 </div>
 
