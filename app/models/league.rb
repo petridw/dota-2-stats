@@ -25,7 +25,7 @@ class League
         end
       end
     else
-      puts "error, no leagues array"
+      puts "error, no leagues could be gotten"
     end 
       
   end
