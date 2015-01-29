@@ -40,6 +40,8 @@ gem 'hashie'
 gem 'omniauth-steam'
 # User sucker_punch for background queuing on one thread
 gem 'sucker_punch', '~> 1.0'
+# Require slowweb to throttle api calls to steam web api
+gem 'slowweb'
 
 
 group :production do

@@ -1,3 +1,6 @@
+require 'slowweb'
+SlowWeb.limit('api.steampowered.com', 1, 1)  # 1 request per second
+
 class SteamController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => :auth_callback
 
