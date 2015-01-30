@@ -1,5 +1,5 @@
 require 'slowweb'
-SlowWeb.limit('api.steampowered.com', 1, 1)  # 1 request per second
+SlowWeb.limit('api.steampowered.com', 2, 1)  # 1 request per second
 
 class SteamController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => :auth_callback
@@ -53,7 +53,7 @@ class SteamController < ApplicationController
     option = "GetMatchHistory/V001/"
 
     if start_at_match_id
-      auth = { query: { account_id: steam_id, start_at_match_id: start, key: ENV['STEAM_WEB_API_KEY']} }
+      auth = { query: { account_id: steam_id, start_at_match_id: start_at_match_id, key: ENV['STEAM_WEB_API_KEY']} }
     else
       auth = { query: { account_id: steam_id, key: ENV['STEAM_WEB_API_KEY']}}
     end

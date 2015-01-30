@@ -6,37 +6,50 @@ class MatchesController < ApplicationController
 
     if params[:reload]
       reload = params[:reload]
-      flash[:info] = "Your match data will be resynced!" 
+      flash[:info] = "Your match data will be resynced! Try refreshing this page in a minute or two. Or a few." 
     else
       reload = false
     end
 
-    matches_json = SteamController.get_match_history(current_user.steam_id, nil)
+    #REALLY, INDEX SHOULD JUST:
+    # 1: kick off job to history_job that says "GET MY HISTORY PLS"
+    # 2: get all games in match database for user
+    # 3: display them if they are there
 
-    @matches = []
+    MatchHistoryJob.new.async.perform(current_user.steam_id, reload)
 
-    if matches_json
+    # matches_json = SteamController.get_match_history(current_user.steam_id, nil)
 
-      matches_json.each do |match_json|
-        match = Match.find(match_json['match_id'])
+    # @matches = []
 
-        if match == nil || reload
+    # if matches_json
 
-          MatchJob.new.async.perform(match_json['match_id'], reload)
+    #   matches_json.each do |match_json|
+    #     match = Match.find(match_json['match_id'])
 
-          error = match_json['match_id']
-          match = Match.new(error: error)
-        end
+    #     if match == nil || reload
 
-        @matches.push(match)
-      end
+    #       MatchJob.new.async.perform(match_json['match_id'], reload)
 
-    else
-      flash[:danger] = "Could not load match data for Steam ID #{current_user.steam_id}. You probably need to enable sharing of match history in your Dota 2 options."
-    end
+    #       error = match_json['match_id']
+    #       match = Match.new(error: error)
+    #     end
+
+    #     @matches.push(match)
+    #   end
+
+    # else
+    #   flash[:danger] = "Could not load match data for Steam ID #{current_user.steam_id}. You probably need to enable sharing of match history in your Dota 2 options."
+    # end
 
     if reload
       redirect_to matches_path
+    else
+      @matches = []
+      Match.all.each do |m|
+        @matches.push(m) if m.players.find(current_user.steam_id_32.to_i)
+      end
+      
     end
 
   end
