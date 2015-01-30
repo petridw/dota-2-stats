@@ -2,23 +2,11 @@ class MatchesController < ApplicationController
 
   before_action :authorize, :auth_steam
 
-  LOBBY_TYPES = [ 
-                  "Public matchmaking",
-                  "Practice",
-                  "Tournament",
-                  "Tutorial",
-                  "Co-op with bots",
-                  "Team match",
-                  "Solo Queue",
-                  "Ranked madness",
-                  "Solo Mid 1vs1"
-                ]
-
   def index
 
     if params[:reload]
       reload = params[:reload]
-      flash[:info] = "Your match data will be resynced!"
+      flash[:info] = "Your match data will be resynced!" 
     else
       reload = false
     end
