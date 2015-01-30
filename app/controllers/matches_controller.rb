@@ -46,7 +46,7 @@ class MatchesController < ApplicationController
       redirect_to matches_path
     else
       @matches = []
-      Match.all.each do |m|
+      Match.all.order_by(start_time: :desc).each do |m|
         @matches.push(m) if m.players.find(current_user.steam_id_32.to_i)
       end
       
