@@ -12,6 +12,7 @@ class LivematchesController < ApplicationController
       @last_updated_string = ""
     else
 
+      #comment this
       last_updated = Time.now.to_i - @livematchlist.created_at.to_time.to_i
 
       if last_updated > 60
