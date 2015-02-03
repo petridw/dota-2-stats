@@ -46,15 +46,16 @@ class MatchesController < ApplicationController
     #   flash[:danger] = "Could not load match data for Steam ID #{current_user.steam_id}. You probably need to enable sharing of match history in your Dota 2 options."
     # end
 
-    if reload
-      redirect_to matches_path
-    else
-      @matches = []
-      Match.all.order_by(start_time: :desc).each do |m|
-        @matches.push(m) if m.players.find(current_user.steam_id_32.to_i) && (!@filter || m.has_pro)
-      end
-      
+    # if reload
+    #   redirect_to matches_path
+    # else
+    
+    @matches = []
+    Match.all.order_by(start_time: :desc).each do |m|
+      @matches.push(m) if m.players.find(current_user.steam_id_32.to_i) && (!@filter || m.has_pro)
     end
+      
+    # end
 
   end
 
