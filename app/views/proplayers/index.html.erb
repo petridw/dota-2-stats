@@ -9,6 +9,13 @@
     <% end %>
   </div>
 </div>
+
+<div class="row">
+  <div class="paginate">
+    <%= paginate @proplayers %>
+  </div>
+</div>
+
 <div class="row">
   <div class="col-md-2"></div>
   <div class="col-md-8">
@@ -24,7 +31,7 @@
         </tr>
       </thead>
       <% offset = (params[:page].to_i * 100) - 100 %>
-      <% offset ||= 0 %>
+      <% offset = 0 if offset < 0%>
       <% @proplayers.each_with_index do |p, index| %>
         <tr>
           <td><%= index + offset + 1 %></td>
@@ -40,7 +47,7 @@
   <div class="col-md-2"></div>
 </div>
 <div class="row">
-  <div class="col-md-12">
+  <div class="paginate">
     <%= paginate @proplayers %>
   </div>
 </div>
