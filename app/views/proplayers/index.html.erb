@@ -30,8 +30,11 @@
           <th>Recent league</th>
         </tr>
       </thead>
-      <% offset = (params[:page].to_i * 100) - 100 %>
+
+      <!-- Set offset for counting matches with pagination -->
+      <% offset = (params[:page].to_i * ITEMS_PER_PAGE) - ITEMS_PER_PAGE %>
       <% offset = 0 if offset < 0%>
+
       <% @proplayers.each_with_index do |p, index| %>
         <tr>
           <td><%= index + offset + 1 %></td>
@@ -42,6 +45,7 @@
           <td><%= truncate(p.last_league, length: 20) %></td>
         </tr>
       <% end %>
+
     </table>
   </div>
   <div class="col-md-2"></div>
