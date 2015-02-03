@@ -22,6 +22,7 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
+# --- Gems I've added ---
 # Use Mongoid for MongoDB
 gem 'mongoid', '~> 4.0.0'
 # Use ActiveModel has_secure_password
@@ -42,6 +43,8 @@ gem 'omniauth-steam'
 gem 'sucker_punch', '~> 1.0'
 # Require slowweb to throttle api calls to steam web api
 gem 'slowweb'
+# Use kaminari for pagination of results with mongoid
+gem 'kaminari'
 
 
 group :production do
