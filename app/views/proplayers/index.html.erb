@@ -26,11 +26,11 @@
       <% @proplayers.each_with_index do |p, index| %>
         <tr>
           <td><%= index + 1 %></td>
-          <td><%= link_to truncate(p.aliases[-1], length: 20), proplayer_path(p.id) %></td>
-          <td><%= truncate(p.teams[-1]) %></td>
+          <td><%= link_to truncate(p.aliases[-1], length: 30), proplayer_path(p.id) %></td>
+          <td><%= truncate(p.teams[-1], length: 30) %></td>
           <td><%= p.tier %></td>
           <td><%= p.last_active.strftime("%m/%d/%Y") if p.last_active %></td>
-          <td><%= p.last_league %></td>
+          <td><%= truncate(p.last_league, length: 30) %></td>
         </tr>
       <% end %>
     </table>
