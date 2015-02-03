@@ -21,4 +21,8 @@ class User
 
   has_secure_password
 
+  # resync match data for all users
+  def self.resync_match_data
+  end
+
 end
