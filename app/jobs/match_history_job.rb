@@ -12,7 +12,11 @@ class MatchHistoryJob
 
       match_array = SteamController.get_match_history(steam_id, start_at)
 
-      matches += match_array
+      if match_array
+        matches += match_array
+      else
+        break
+      end
 
       if match_array.count <= 1
         more_matches = false
