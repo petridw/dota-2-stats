@@ -8,5 +8,5 @@ Rails.application.initialize!
 # items per page for pagination
 ITEMS_PER_PAGE = 50
 
-# limit requests to Steam to 3 requests per 1 second
-SlowWeb.limit('api.steampowered.com', 3, 1)
+# limit requests to Steam to 4 requests per 1 second
+SlowWeb.limit('api.steampowered.com', 4, 1)
