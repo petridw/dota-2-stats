@@ -17,6 +17,7 @@ class User
   validates :password_confirmation, presence: true, length: {minimum: 8}, on: :create
 
   has_many :proplayers
+  has_and_belongs_to_many :matches
 
   has_secure_password
 

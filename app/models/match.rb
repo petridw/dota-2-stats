@@ -9,5 +9,7 @@ class Match
   field :has_pro, type: Boolean
   field :syncing, type: Boolean
 
+  has_and_belongs_to_many :users
+
   embeds_many :players
 end
