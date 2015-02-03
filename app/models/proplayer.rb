@@ -1,6 +1,7 @@
 class Proplayer
   include Mongoid::Document
 
+  #id is player's 32-bit steam ID
   field :aliases, type: Array
   field :teams, type: Array
   field :tier, type: Integer
