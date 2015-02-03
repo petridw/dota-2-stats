@@ -1,13 +1,22 @@
 <div class="row table-heading">
   <div class="h2 col-md-12">Ticketed players</div>
   <div class="h4">This list is being built day by day as more ticketed games occur. Currently tracking <%= @total_tracked_players %> ticketed players.</div>
-  <div class="h4">
-    <% if @filter %>
-      <%= link_to "Show All", proplayers_path %>
+<div class="h4">
+  <% if current_user %>
+    <% if current_user.steam_id %>
+      <% if @filter %>
+        <%= link_to "Show All", proplayers_path %>
+      <% else %>
+        <%= link_to "Filter those I've encountered", proplayers_path(filter: true) %>
+      <% end %>
     <% else %>
-      <%= link_to "Filter those I've encountered", proplayers_path(filter: true) %>
+      Sync your Steam account to see who you've been matched with!
     <% end %>
-  </div>
+  <% else %>
+    Sign in and sync your Steam account to see who you've been matched with!
+  <% end %>
+</div>
+
 </div>
 
 <div class="row">

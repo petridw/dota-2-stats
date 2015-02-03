@@ -1,5 +1,7 @@
 class ProplayersController < ApplicationController
  
+  # before_action :authorize
+
   def index
 
     #filter should be set to the param but false if param isn't
@@ -9,7 +11,6 @@ class ProplayersController < ApplicationController
     @total_tracked_players = Proplayer.count
 
     if @filter
-      authorize
       @proplayers = current_user.proplayers.order_by(tier: :desc, last_active: :desc).page(params[:page]).per(ITEMS_PER_PAGE)
     else
       @proplayers = Proplayer.all.order_by(tier: :desc, last_active: :desc).page(params[:page]).per(ITEMS_PER_PAGE)
