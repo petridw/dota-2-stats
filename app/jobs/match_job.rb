@@ -1,8 +1,10 @@
 class MatchJob
   include SuckerPunch::Job
 
-  def perform(match_id, update)
+  def perform(match_id, update, uid)
     puts "UPDATE = #{update}"
+    current_user = User.find(uid)
+    puts "FOUND USER" if current_user
 
     match_json = SteamController.get_match(match_id)
 
@@ -22,9 +24,12 @@ class MatchJob
       players.each do |p|
 
         #check if player is pro
-        if Proplayer.find(p['account_id'].to_i)
+        pro_in_db = Proplayer.find(p['account_id'].to_i)
+        if pro_in_db
           pro = true
           match.has_pro = true
+          puts "adding pro player to user"
+          current_user.proplayers.push(pro_in_db) unless current_user.proplayers.find(pro_in_db.id)
         else
           pro = false
         end

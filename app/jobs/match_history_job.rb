@@ -1,7 +1,7 @@
 class MatchHistoryJob
   include SuckerPunch::Job
 
-  def perform(steam_id, reload)
+  def perform(steam_id, reload, uid)
 
     start_at = nil
     more_matches = true
@@ -29,7 +29,8 @@ class MatchHistoryJob
       if match == nil || reload
         puts "didn't find match so about to save it"
 
-        MatchJob.new.perform(match_json['match_id'], reload)
+        #pass along uid so that proplayers can be added to user if found
+        MatchJob.new.perform(match_json['match_id'], reload, uid)
 
         # error = match_json['match_id']
         # match = Match.new(error: error)

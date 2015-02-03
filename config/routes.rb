@@ -22,8 +22,8 @@ Rails.application.routes.draw do
 
 # mygames
   get '/matches' => 'matches#index', as: :matches
-  get '/matches/:id' => 'matches#show', as: :match
   get '/matches/pro' => 'matches#pro', as: :promatches
+  get '/matches/:id' => 'matches#show', as: :match
 
 
 # steam

@@ -11,12 +11,16 @@ class MatchesController < ApplicationController
       reload = false
     end
 
+    #filter should be set to the param but false if param isn't
+    @filter = params[:filter]
+    @filter ||= false
+
     #REALLY, INDEX SHOULD JUST:
     # 1: kick off job to history_job that says "GET MY HISTORY PLS"
     # 2: get all games in match database for user
     # 3: display them if they are there
 
-    MatchHistoryJob.new.async.perform(current_user.steam_id, reload)
+    MatchHistoryJob.new.async.perform(current_user.steam_id, reload, current_user.id)
 
     # matches_json = SteamController.get_match_history(current_user.steam_id, nil)
 
@@ -47,7 +51,7 @@ class MatchesController < ApplicationController
     else
       @matches = []
       Match.all.order_by(start_time: :desc).each do |m|
-        @matches.push(m) if m.players.find(current_user.steam_id_32.to_i)
+        @matches.push(m) if m.players.find(current_user.steam_id_32.to_i) && (!@filter || m.has_pro)
       end
       
     end
@@ -73,25 +77,31 @@ class MatchesController < ApplicationController
 
   def pro
     #find games vs or with pro players only
-    matches_json = SteamController.get_match_history(current_user.steam_id, nil)
+    # matches_json = SteamController.get_match_history(current_user.steam_id, nil)
+
+    # @matches = []
 
     @matches = []
-
-    if matches_json
-      matches_json.each do |match_json|
-
-        match = Match.find(match_json['match_id'])
-
-        if match == nil
-          MatchJob.new.async.perform(match_json['match_id'])
-        else
-            @matches.push(match) if match.has_pro
-        end
-
-      end
-    else
-      flash[:danger] = "Could not load match data for Steam ID #{current_user.steam_id}. You probably need to enable sharing of match history in your Dota 2 options."
+    Match.all.order_by(start_time: :desc).each do |m|
+      @matches.push(m) if m.players.find(current_user.steam_id_32.to_i) && m.has_pro
     end
+
+    # if matches_json
+    #   matches_json.each do |match_json|
+
+    #     match = Match.find(match_json['match_id'])
+
+    #     if match == nil
+    #       MatchJob.new.async.perform(match_json['match_id'], true, current_user.id)
+    #     else
+    #         @matches.push(match) if match.has_pro
+    #     end
+
+    #   end
+    # else
+    #   flash[:danger] = "Could not load match data for Steam ID #{current_user.steam_id}. You probably need to enable sharing of match history in your Dota 2 options."
+    # end
+    render :index
   end
 
 
