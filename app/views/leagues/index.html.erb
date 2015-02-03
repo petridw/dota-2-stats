@@ -1,6 +1,12 @@
 <div class="row">
   <div class="h2 col-md-12">Leagues</div>
 </div>
+
+<div class="row">
+  <div class="paginate">
+    <%= paginate @leagues %>
+  </div>
+</div>
 <div class="row">
   <div class="col-md-2"></div>
   <div class="col-md-8">
@@ -13,9 +19,14 @@
           <th>Last active</th>
         </tr>
       </thead>
+
+      <!-- Set offset for counting matches with pagination -->
+      <% offset = (params[:page].to_i * ITEMS_PER_PAGE) - ITEMS_PER_PAGE %>
+      <% offset = 0 if offset < 0%>
+
       <% @leagues.each_with_index do |l, index| %>
         <tr>
-          <td><%= index + 1%></td>
+          <td><%= index + offset + 1%></td>
           <td><%= truncate(l.name, length: 45) %></td>
           <td><%= link_to truncate("#{l.url}", length: 45), l.url%></td>
           <td>
@@ -28,4 +39,9 @@
     </table>
   </div>
   <div class="col-md-2"></div>
+</div>
+<div class="row">
+  <div class="paginate">
+    <%= paginate @leagues %>
+  </div>
 </div>
