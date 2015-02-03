@@ -1,6 +1,6 @@
 <div class="row table-heading">
   <div class="h2 col-md-12">Ticketed players</div>
-  <div class="h4">This list is being built day by day as more ticketed games occur. Currently tracking <%= @proplayers.count %> ticketed players.</div>
+  <div class="h4">This list is being built day by day as more ticketed games occur. Currently tracking <%= @total_tracked_players %> ticketed players.</div>
   <div class="h4">
     <% if @filter %>
       <%= link_to "Show All", proplayers_path %>
@@ -20,12 +20,14 @@
           <th>Current team</th>
           <th>Tier</th>
           <th>Last active</th>
-          <th></th>
+          <th>Recent league</th>
         </tr>
       </thead>
+      <% offset = (params[:page].to_i * 100) - 100 %>
+      <% offset ||= 0 %>
       <% @proplayers.each_with_index do |p, index| %>
         <tr>
-          <td><%= index + 1 %></td>
+          <td><%= index + offset + 1 %></td>
           <td><%= link_to truncate(p.aliases[-1], length: 20), proplayer_path(p.id) %></td>
           <td><%= truncate(p.teams[-1], length: 20) %></td>
           <td><%= p.tier %></td>
@@ -36,4 +38,9 @@
     </table>
   </div>
   <div class="col-md-2"></div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <%= paginate @proplayers %>
+  </div>
 </div>

@@ -6,11 +6,13 @@ class ProplayersController < ApplicationController
     @filter = params[:filter]
     @filter ||= false
 
+    @total_tracked_players = Proplayer.count
+
     if @filter
       authorize
-      @proplayers = current_user.proplayers.order_by(tier: :desc, last_active: :desc)
+      @proplayers = current_user.proplayers.order_by(tier: :desc, last_active: :desc).page(params[:page]).per(100)
     else
-      @proplayers = Proplayer.all.order_by(tier: :desc, last_active: :desc)
+      @proplayers = Proplayer.all.order_by(tier: :desc, last_active: :desc).page(params[:page]).per(100)
     end
   end
 
