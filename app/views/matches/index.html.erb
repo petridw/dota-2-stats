@@ -2,7 +2,7 @@
 <div class="row">
   <div class="col-md-12">
     <div class="h2"><%= current_user.steam_nickname %></div>
-    <div class="h4">Games with or against ticketed 'pro' players will have <span class="match-has-pro"><a>bolded links</a></span></div>
+    <div class="h4">Games with or against ticketed players will have <span class="match-has-pro"><a>bolded links</a></span></div>
     <div class="h4">
       <% if @filter %>
         <%= link_to "Show All", matches_path %>
