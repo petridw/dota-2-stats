@@ -49,11 +49,19 @@ class MatchesController < ApplicationController
     # if reload
     #   redirect_to matches_path
     # else
-    
-    @matches = []
-    Match.all.order_by(start_time: :desc).each do |m|
-      @matches.push(m) if m.players.find(current_user.steam_id_32.to_i) && (!@filter || m.has_pro)
+    if @filter
+      @matches = current_user.matches.where(has_pro: true).order_by(start_time: :desc).page(params[:page]).per(ITEMS_PER_PAGE)
+    else
+      @matches = current_user.matches.order_by(start_time: :desc).page(params[:page]).per(ITEMS_PER_PAGE)
     end
+
+    # @matches = @matches.select{ |m| m.has_pro } if @filter
+    # @matches.page(params[:page]).per(ITEMS_PER_PAGE)
+
+    # @matches = []
+    # Match.all.order_by(start_time: :desc).each do |m|
+    #   @matches.push(m) if m.players.find(current_user.steam_id_32.to_i) && (!@filter || m.has_pro)
+    # end
       
     # end
 

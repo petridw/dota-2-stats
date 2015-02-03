@@ -10,9 +10,9 @@ class ProplayersController < ApplicationController
 
     if @filter
       authorize
-      @proplayers = current_user.proplayers.order_by(tier: :desc, last_active: :desc).page(params[:page]).per(100)
+      @proplayers = current_user.proplayers.order_by(tier: :desc, last_active: :desc).page(params[:page]).per(ITEMS_PER_PAGE)
     else
-      @proplayers = Proplayer.all.order_by(tier: :desc, last_active: :desc).page(params[:page]).per(100)
+      @proplayers = Proplayer.all.order_by(tier: :desc, last_active: :desc).page(params[:page]).per(ITEMS_PER_PAGE)
     end
   end
 
