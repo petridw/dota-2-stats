@@ -4,7 +4,6 @@ class MatchJob
   def perform(match_id, update, uid)
     puts "UPDATE = #{update}"
     current_user = User.find(uid)
-    puts "FOUND USER" if current_user
 
     match_json = SteamController.get_match(match_id)
 
@@ -69,6 +68,8 @@ class MatchJob
       match.id = match_json['match_id']
 
       match.update
+
+      current_user.matches.push(match) unless current_user.matches.find(match.id)
 
     end
     
