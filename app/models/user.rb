@@ -21,8 +21,10 @@ class User
 
   has_secure_password
 
+  # ----------
   # resync match data for all users
   # this could take a while.....
+  # ----------
   def self.resync_match_data
 
     start_time = Time.now.to_i

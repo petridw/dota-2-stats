@@ -4,6 +4,11 @@ class MatchesController < ApplicationController
 
   def index
 
+    # -----
+    # params[:reload] may or may not be given. If it's not given then set reload to false. The reload
+    # boolean variable will be passed to the MatchHistoryJob and determines if the user's entire match
+    # history should be reloaded.
+    # -----
     if params[:reload]
       reload = params[:reload]
       flash[:info] = "Your match data will be resynced! Try refreshing this page in a minute or two. Or a few." 
@@ -11,59 +16,23 @@ class MatchesController < ApplicationController
       reload = false
     end
 
-    #filter should be set to the param but false if param isn't
+    # -----
+    # @filter should be set to the param but false if param isn't provided. If @filter is true
+    # then the only matches displayed will be the user's matches with "proplayers"
+    # -----
     @filter = params[:filter]
     @filter ||= false
 
-    #REALLY, INDEX SHOULD JUST:
-    # 1: kick off job to history_job that says "GET MY HISTORY PLS"
-    # 2: get all games in match database for user
-    # 3: display them if they are there
-
+    # Start an async match history job to fetch and update the user's match data. In the current
+    # implementation the page will need to be reloaded for the user to see any new data that is
+    # stored from this call.
     MatchHistoryJob.new.async.perform(current_user.steam_id, reload, current_user.id)
 
-    # matches_json = SteamController.get_match_history(current_user.steam_id, nil)
-
-    # @matches = []
-
-    # if matches_json
-
-    #   matches_json.each do |match_json|
-    #     match = Match.find(match_json['match_id'])
-
-    #     if match == nil || reload
-
-    #       MatchJob.new.async.perform(match_json['match_id'], reload)
-
-    #       error = match_json['match_id']
-    #       match = Match.new(error: error)
-    #     end
-
-    #     @matches.push(match)
-    #   end
-
-    # else
-    #   flash[:danger] = "Could not load match data for Steam ID #{current_user.steam_id}. You probably need to enable sharing of match history in your Dota 2 options."
-    # end
-
-    # if reload
-    #   redirect_to matches_path
-    # else
     if @filter
       @matches = current_user.matches.where(has_pro: true).order_by(start_time: :desc).page(params[:page]).per(ITEMS_PER_PAGE)
     else
       @matches = current_user.matches.order_by(start_time: :desc).page(params[:page]).per(ITEMS_PER_PAGE)
     end
-
-    # @matches = @matches.select{ |m| m.has_pro } if @filter
-    # @matches.page(params[:page]).per(ITEMS_PER_PAGE)
-
-    # @matches = []
-    # Match.all.order_by(start_time: :desc).each do |m|
-    #   @matches.push(m) if m.players.find(current_user.steam_id_32.to_i) && (!@filter || m.has_pro)
-    # end
-      
-    # end
 
   end
 
