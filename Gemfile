@@ -46,6 +46,9 @@ gem 'slowweb'
 # Use kaminari for pagination of results with mongoid
 gem 'kaminari'
 
+# User passenger as web server on Heroku
+gem 'passenger'
+
 
 group :production do
   gem 'rails_12factor'
