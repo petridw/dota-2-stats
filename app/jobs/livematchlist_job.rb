@@ -1,6 +1,7 @@
 class LivematchlistJob
   include SuckerPunch::Job
 
+  # Get list of live games from Steam and save relevant player and livematch data
   def perform
 
     matchlist_json = SteamController.get_live_games
