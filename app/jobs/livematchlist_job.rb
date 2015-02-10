@@ -6,31 +6,36 @@ class LivematchlistJob
 
     matchlist_json = SteamController.get_live_games
 
+    # keep list of leagues up to date
     League.update_leagues
+
+    # keep only up-to-date livematchlists
     Livematchlist.clean
 
     livematchlist = Livematchlist.new
 
     matchlist_json.each do |match_json|
 
-      #update league last_active date
+
+      # Update league last_active date
       league = League.find(match_json['league_id'].to_i)
+
       if league
         league.last_active = DateTime.now 
         league.save
-        puts "Saved league date!"
       else
         puts "league wasn't found :("
       end
 
-      #get and store player data if it's there
+      # -----
+      # Get player info from this match's JSON and store it
+      # -----
       if match_json['players']
         match_json['players'].each do |p|
 
           #make sure player is on a team and not a caster
           if (p['team'] == 0) || (p['team'] == 1)
 
-            #store pro player data if I don't have it already
             pro_player = Proplayer.find(p['account_id'])
 
             if pro_player
@@ -70,7 +75,9 @@ class LivematchlistJob
       end
 
 
-
+    # -----
+    # Get match info from this match's JSON and store it in the livematchlist
+    # -----
     livematch = Livematch.new(
                     id: match_json['match_id'],
                     spectators: match_json['spectators'],
@@ -86,8 +93,13 @@ class LivematchlistJob
       radiant.name = "Radiant"
       dire.name = "Dire"
 
+      # If the match hasn't started yet then the scoreboard won't exist
       if match_json['scoreboard']
 
+
+        # -----
+        # Get relevant information from the scoreboard JSON for this match:
+        # -----
         livematch.duration = match_json['scoreboard']['duration']
 
         radiant.id = "Radiant"
@@ -105,8 +117,9 @@ class LivematchlistJob
         dire.bans = match_json['scoreboard']['dire']['bans']
 
 
-        puts "doing shit for players..."
-
+        # -----
+        # Get the Radiant player data from this match
+        # -----
         match_json['scoreboard']['radiant']['players'].each do |p|
 
           liveplayer = Liveplayer.new
@@ -145,6 +158,9 @@ class LivematchlistJob
 
         end
 
+        # -----
+        # Get the Dire player data from this match
+        # -----
         match_json['scoreboard']['dire']['players'].each do |p|
 
           liveplayer = Liveplayer.new
@@ -185,26 +201,35 @@ class LivematchlistJob
 
       end
 
+      # -----
+      # Get team names and logos. Sometimes these sections don't get returned in the JSON.
+      # -----
       if match_json['radiant_team']
         radiant.name = match_json['radiant_team']['team_name']
         radiant.team_logo = match_json['radiant_team']['team_logo']
       end
-
       if match_json['dire_team']
         dire.name = match_json['dire_team']['team_name']
         dire.team_logo = match_json['dire_team']['team_logo']
       end
 
+
+      # -----
+      # Once all data about this match has been acquired, push the two teams into the
+      # livematch's team list and then push the livematch onto the livematchlist
+      # -----
       livematch.liveteams.push(radiant)
       livematch.liveteams.push(dire)
 
       livematchlist.livematches.push(livematch)
+
     end
 
+
     if livematchlist.save
-      puts "yayyyyyyyyyyyyyy"
+      puts "Live match list saved and updated at #{livematchlist.created_at}"
     else
-      puts "nooooooooooooooo"
+      puts "Error saving live match list."
     end
 
   end
