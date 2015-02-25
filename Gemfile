@@ -45,20 +45,14 @@ gem 'sucker_punch', '~> 1.0'
 gem 'slowweb'
 # Use kaminari for pagination of results with mongoid
 gem 'kaminari'
-
-# User passenger as web server on Heroku
+# Use passenger as web server on Heroku
 gem 'passenger'
-
+# Use bullet to find n+1 queries
+gem "bullet", :group => "development"
 
 group :production do
   gem 'rails_12factor'
 end
-
-# Use Unicorn as the app server
-# gem 'unicorn'
-
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
