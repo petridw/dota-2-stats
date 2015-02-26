@@ -40,4 +40,5 @@ RSpec.describe User, :type => :model do
   it "authenticates user with correct password" do
     expect(@user.authenticate("123456")).to eq(false)
   end
+
 end

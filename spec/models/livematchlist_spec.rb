@@ -1,5 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Livematchlist, :type => :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe "#clean" do
+    it "clean is a class method" do
+      expect(Livematchlist).to respond_to :clean
+    end
+  end
 end
