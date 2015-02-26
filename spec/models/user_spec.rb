@@ -16,10 +16,9 @@ RSpec.describe User, :type => :model do
   end
 
   it "validates uniqueness of username" do
-    @dupeUser = User.new(username: "dwp171", email: "blah@blah.com", password: "abcdefg", password_confirmation: "abcdefg")
+    @dupeUser = User.create(username: "dwp171", email: "blah@blah.com", password: "abcdefg", password_confirmation: "abcdefg")
 
-    expect(@user.save).to eq(true)
-    expect(@dupeUser.save).to eq(false)
+    expect(@user.valid?).to eq(false)
   end
 
   it "validates presence of password" do
